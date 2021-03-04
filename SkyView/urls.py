@@ -15,7 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
+from website import views
 
 urlpatterns = [
+    path('', views.index, name = 'index'),
+    path('create_post/', views.create_post, name = 'create_post'),
+    path('feed/', views.feed, name = 'feed'),
+    path('planet/', views.planets, name = 'planet'), # this should have the name of the specific planet
+    path('view_post/', views.post, name = 'view_post'),
+    path('profile/', views.profile, name = 'profile'),
+    path('authenticate/', views.authenticate, name = 'authenticate'),
     path('admin/', admin.site.urls),
+    path('website/', include('website.urls')),
 ]
