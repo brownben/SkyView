@@ -5,6 +5,15 @@
     <title>SkyView</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            var nasaBox = $("#nasaPicture");
+            $.get("https://api.nasa.gov/planetary/apod?api_key=PI5Fhlc0LjXWmwlekt1BpxTSfixkveFg8NQGI8FA", function (data) {
+                nasaBox.attr('src', data["url"]);
+            });
+        });
+    </script>
 </head>
 
 <body>
