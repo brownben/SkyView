@@ -22,6 +22,19 @@ body {
     margin: auto;
 }
 
+#nasaPicture{
+    width:100%;
+    max-width:800px;
+    height:auto;
+    margin:auto;
+}
+
+#pictureBox{
+    width:70%;
+    margin:auto;
+
+}
+
 .button:hover {
     background-color: #747474;
 }
