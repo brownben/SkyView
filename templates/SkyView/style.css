@@ -1,0 +1,64 @@
+
+
+body {
+    background-image: url("images/stars.png");
+    background-color: black;
+    background-repeat:repeat;
+    background-size:50%;
+}
+
+
+#navbar {
+    position: sticky;
+    width: 70%;
+    background-color: #747474;
+    opacity: 0.5;
+    margin: auto;
+    padding: 5px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    max-width: 700px;
+    margin: auto;
+}
+
+#nasaPicture{
+    width:100%;
+    max-width:800px;
+    height:auto;
+    margin:auto;
+}
+
+#pictureBox{
+    width:70%;
+    margin:auto;
+
+}
+
+.button:hover {
+    background-color: #747474;
+}
+
+
+.textBox {
+    display:inline-block;
+    margin-top:5px;
+    margin-bottom:5px;
+    margin-left:10px;
+    margin-right:10px;
+    padding:5px;
+    background-color: #E8E8E8;
+    border-radius:10px;
+    opacity:1;
+}
+
+.content {
+    opacity: 0.5;
+    margin:auto;
+    background-color: #747474;
+    border-radius: 10px;
+    padding:10px;
+    max-width: 900px;
+    margin-top:20px;
+    margin-bottom:20px;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    {% load staticfiles %}
+    {% load rango_template_tags %}
+<head lang="en">
+    <meta charset="utf-8" />
+    <title>
+        SkyView:
+        {% block title_block %}
+        Start Your Journey Here
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div id="navbar">
+        <ul>
+            <li class="textBox button"><a href="">Home</a></li>
+            <li class="textBox button"><a href="">Feed</a></li>
+            <li class="textBox button"><a href="">Planets</a></li>
+            {% if user.is_authenticated %}
+            <li class="textBox button"><a href="">Logout</a></li>
+            <li class="textBox button"><a href="">Post</a></li>
+            {% else %}
+            <li class="textBox button"><a href="">Sign Up</a></li>
+            <li class="textBox button"><a href="">Login</a></li>
+            {% endif %}
+
+
+        </ul>
+    </div>
+
+</body>
+</html>
