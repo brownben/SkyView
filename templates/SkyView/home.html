@@ -2,19 +2,20 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 {% load staticfiles %}
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>SkyView</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
 </head>
 
 <body>
 
     <div id="navbar">
+        <div class="opacityBg"></div>
         <a href=""><div class="textBox button">Home</div></a>
-        <div class="textBox button">Planets</div>
-        <div class="textBox button">Sign In</div>
-        <div class="textBox button">Sign Up</div>
+        <a href=""><div class="textBox button">Planets</div></a>
+        <a href=""><div class="textBox button">Sign In</div></a>
+        <a href=""><div class="textBox button">Sign Up</div></a>
     </div>
 
     <div id=" carousel">
@@ -22,15 +23,16 @@
     </div>
 
     <div class="content" id="feed">
+        <div class="opacityBg"></div>
         <div class="textBox" style="margin-left:3%;">Feed</div>
         <div class="feedBox">
-            <div class="item">
-                <img src="{% static 'images/pfp.png' %}"/>
+            <div class="item" style="position:relative">
+                <img src="{% static 'images/pfp.png' %}" />
                 <div class="post">
                     <h3 class="textBox">Title</h3>
-                    <p class="textBox">bkjsfjvownvowmkpsnvnvp pinscpsnvlm snpsndpm</p class="textBox">
-                </div> 
-            </div> 
+                    <p class="textBox">bkjsfjvownvowmkpsnvnvp nosdjcnosjdcno. </p>
+                </div>
+            </div>
         </div>
 
     </div>
