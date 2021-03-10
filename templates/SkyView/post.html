@@ -1,25 +1,38 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% load staticfiles %}
 <head>
     <meta charset="utf-8" />
     <title>SkyView</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 
 <body>
+
     <div id="navbar">
-        <div class="textBox button">Home</div>
-        <div class="textBox button">Planets</div>
-        <div class="textBox button">Sign In</div>
-        <div class="textBox button">Sign Up</div>
+        <div class="opacityBg"></div>
+        <a href=""><div class="textBox button">Home</div></a>
+        <a href=""><div class="textBox button">Planets</div></a>
+        <a href=""><div class="textBox button">Sign In</div></a>
+        <a href=""><div class="textBox button">Sign Up</div></a>
     </div>
 
-    <div>
+    <div class="content" id="feed">
+        <div class="opacityBg"></div>
+        <div class="feedBox">
+            <div class="item" style="position:relative">
+                <img class="pfp" src="{% static 'images/pfp.png' %}" />
+                <div class="post">
+                    <h3 class="textBox">Title</h3>
+                    <p class="textBox">bkjsfjvownvowmkpsnvnvp nosdjcnosjdcno. </p>
+                    <!--if post has image-->
+                    <img src="{post.img}" style="display:inline-block" />
+                </div>
+                <!--if comments exist: for all comments in-->
 
-
-
+            </div>
+        </div>
     </div>
 
 </body>
