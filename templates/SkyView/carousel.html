@@ -1,0 +1,23 @@
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'styles/carousel.css' %}" />
+<section class="carousel-container">
+  <div class="carousel">
+    {% for planet in planets %}
+    <div id="{{ planet.slug }}" class="carousel__item">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg"
+        alt="A Picture of {{ planet.name }}"
+        class="carousel__image"
+      />
+    </div>
+    {% endfor %}
+  </div>
+  <div id="controls" class="controls">
+    {% for planet in planets %}
+    <a href="#{{ planet.slug }}" class="controls__dot">
+      <span class="sr-only">The Planet {{ planet.name }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+<script type="module" src="{% static 'scripts/carousel.js' %}"></script>

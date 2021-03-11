@@ -1,11 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 {% load staticfiles %}
+{% load website_template_tags %}
 <head>
     <meta charset="utf-8"/>
     <title>SkyView</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
 </head>
 
 <body>
@@ -18,9 +18,7 @@
         <a href=""><div class="textBox button">Sign Up</div></a>
     </div>
 
-    <div id=" carousel">
-
-    </div>
+    {% planets_carousel %}
 
     <div class="content" id="feed">
         <div class="opacityBg"></div>
