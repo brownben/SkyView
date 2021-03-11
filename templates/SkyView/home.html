@@ -38,15 +38,8 @@
     </div>
 
     <div id="pictureBox">
-        <img id="nasaPicture" />
+        <img id="nasaPicture" alt="NASA Picture of the Day" />
     </div>
-	<script type="module">
-        const nasaImage = document.getElementById('nasaPicture')
-        fetch(
-          'https://api.nasa.gov/planetary/apod?api_key=PI5Fhlc0LjXWmwlekt1BpxTSfixkveFg8NQGI8FA'
-        )
-          .then((data) => data.json())
-          .then((data) => nasaImage.setAttribute('src', data.url))
-    </script>
+    <script type="module" src="{% static 'scripts/nasaPictureOfTheDay.js' %}"></script>
 </body>
 </html>
