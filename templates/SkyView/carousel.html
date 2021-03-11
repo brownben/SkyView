@@ -5,9 +5,10 @@
     {% for planet in planets %}
     <div id="{{ planet.slug }}" class="carousel__item">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg"
+        src="{{ planet.image.url }}"
         alt="A Picture of {{ planet.name }}"
         class="carousel__image"
+        loading="lazy"
       />
     </div>
     {% endfor %}
