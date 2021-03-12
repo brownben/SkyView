@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
 
+
+/*constant attribute */
+
 body {
     background-image: url("images/stars.png");
     background-color: black;
@@ -20,6 +23,7 @@ body {
 }
 
 
+
 #nasaPicture {
     width: 100%;
     max-width: 800px;
@@ -33,6 +37,7 @@ body {
 
 }
 
+
 .opacityBg {
     border-radius: 30px;
     background-color: #747474;
@@ -42,10 +47,12 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    opacity: .6;
+
+    opacity: .5;
     width: 100%;
     height: 100%;
 }
+
 
 .button:hover {
     background-color: #C8C8C8;
@@ -62,6 +69,7 @@ a:active{
     text-decoration: none;
     transform: translateY(1px);
 }
+
 
 .textBox {
     z-index: 2;
@@ -83,13 +91,63 @@ a:active{
     max-width: 900px;
     margin-top: 20px;
     margin-bottom: 20px;
-    height:auto;
+    height: auto;
 }
 
+.button:hover {
+    background-color: #C8C8C8;
+}
+
+a {
+    text-decoration: none;
+}
+
+.button:active {
+    text-decoration: none;
+    transform: translateY(1px);
+}
+
+/*feed attributes*/
+
 .feedBox {
+    margin-top: 6px;
     height: auto;
     margin-left: 3%;
 }
+
+
+/* home page attributes*/
+
+#nasaPicture {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    margin: auto;
+}
+
+#pictureBox{
+    width:70%;
+    margin:auto;
+
+}
+
+/*planet page attributes*/
+
+table {
+    margin: auto;
+    font-family: 'Comfortaa', cursive;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+th {
+    color: white;
+    text-align:left;
+}
+
+td{
+    color:white;
+    text-align:right;
 
 .pfp{
     vertical-align:top;
