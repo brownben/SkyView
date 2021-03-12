@@ -1,12 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
 
+
 /*constant attribute */
+
 body {
     background-image: url("images/stars.png");
     background-color: black;
     background-repeat:repeat;
     background-size:50%;
 }
+
 
 #navbar {
     position: relative;
@@ -19,6 +22,22 @@ body {
     margin: auto;
 }
 
+
+
+#nasaPicture {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    margin: auto;
+}
+
+#pictureBox{
+    width:70%;
+    margin:auto;
+
+}
+
+
 .opacityBg {
     border-radius: 30px;
     background-color: #747474;
@@ -28,9 +47,27 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
+
     opacity: .5;
     width: 100%;
     height: 100%;
+}
+
+
+.button:hover {
+    background-color: #C8C8C8;
+}
+
+a {
+    text-decoration: none;
+}
+a:active{
+    color:black;
+}
+
+.button:active {
+    text-decoration: none;
+    transform: translateY(1px);
 }
 
 
@@ -78,39 +115,6 @@ a {
     margin-left: 3%;
 }
 
-.pfp {
-    vertical-align: top;
-    width: 70px;
-    height: 70px;
-    border-radius: 20px;
-    display: inline-flex;
-}
-
-.post {
-    position: relative;
-    width: 80%;
-    margin: auto;
-    display: inline-block;
-}
-
-    .post h3 {
-        position: relative;
-        width: 100%;
-        margin: 0px;
-        margin-top: 5px;
-        padding: 5px;
-    }
-
-    .post p {
-        background-color: #5D5D5D;
-        position: relative;
-        display: inline-block;
-        width: auto;
-        margin: 0px;
-        padding: 5px;
-    }
-
-
 
 /* home page attributes*/
 
@@ -144,4 +148,34 @@ th {
 td{
     color:white;
     text-align:right;
+
+.pfp{
+    vertical-align:top;
+    width:70px;
+    height:70px;
+    border-radius:20px;
+    display:inline-flex;
+}
+
+.post {
+    position:relative;
+    width:80%;
+    margin:auto;
+    display:inline-block;
+}
+
+.post h3{
+    position:relative;
+    width:100%;
+    margin:0px;
+    margin-top:5px;
+    padding:5px;
+}
+.post p {
+    background-color:#5D5D5D;
+    position:relative;
+    display:inline-block;
+    width: auto;
+    margin: 0px;
+    padding: 5px;
 }
