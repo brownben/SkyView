@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import json
 
 
 class Planet(models.Model):
@@ -11,6 +12,19 @@ class Planet(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if type(self.data) != type(""):
+            self.data = json.dumps(self.data)
+
+        super().save(*args, **kwargs)
+
+    @property
+    def statistics(self):
+        if type(self.data) == type(""):
+            return json.loads(self.data)
+        else:
+            return self.data
 
 
 class Post(models.Model):
