@@ -12,26 +12,26 @@
 <body>
 
     <div id="navbar">
-        <ul>
+        <div class="opacityBg"></div>
+        <ul style="margin:auto;">
             <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
             <li class="textBox button"><a href="{% url 'website:feed' %}">Feed</a></li>
-            <li class="textBox button"><a href="">Planets</a></li>
+            <li class="textBox button"><a href="{% url 'website:planet' %}">Planets</a></li>
             {% if user.is_authenticated %}
             <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
-            <li class="textBox button"><a href="">Create a Post</a></li>
+            <li class="textBox button"><a href="">Post</a></li>
             {% else %}
             <li class="textBox button"><a href="{% url 'website:signUp' %}">Sign Up</a></li>
             <li class="textBox button"><a href="{% url 'website:login' %}">Login</a></li>
             {% endif %}
-
-
         </ul>
     </div>
-    <div>
+    <div class="content">
+        <div class="opacityBg"></div>
         {% if registered %}
-            <strong>Welcome to the team!</strong>
+            <div class="textBox">Welcome to the team!</div>
         {% else %}
-            <strong>Join the community!</strong><br />
+            <div class="textBox">Join the community!</div><br />
             <form id="user_form" method="post" action="{% url 'website:signUp' %}"
                 enctype="multipart/form-data">
 
