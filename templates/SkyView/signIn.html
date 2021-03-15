@@ -1,11 +1,10 @@
 ﻿<!DOCTYPE html>
 
-
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 {% load staticfiles %}
 <head>
     <meta charset="utf-8" />
-    <title>SkyView</title>
+    <title>SkyView: Sign In</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 
@@ -26,25 +25,17 @@
             {% endif %}
         </ul>
     </div>
+    <!-- Heading could go here -->
+
+
     <div class="content">
         <div class="opacityBg"></div>
-        {% if registered %}
-            <div class="textBox">Welcome to the team!</div>
-        {% else %}
-            <div class="textBox">Join the community!</div><br />
-            <form id="user_form" method="post" action="{% url 'website:signUp' %}"
-                enctype="multipart/form-data">
+        <!-- add sign in code here -->
 
-            {% csrf_token %}
 
-            <!-- Display each form -->
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
 
-            <!-- Provide a button to click to submit the form. -->
-            <input type="submit" name="submit" value="Sign Up" />
-            </form>
-        {% endif %}
     </div>
+
 </body>
+
 </html>

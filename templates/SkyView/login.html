@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
     <div id="navbar">
         <div class="opacityBg"></div>
         <ul style="margin:auto;">
@@ -28,23 +27,15 @@
     </div>
     <div class="content">
         <div class="opacityBg"></div>
-        {% if registered %}
-            <div class="textBox">Welcome to the team!</div>
-        {% else %}
-            <div class="textBox">Join the community!</div><br />
-            <form id="user_form" method="post" action="{% url 'website:signUp' %}"
-                enctype="multipart/form-data">
-
-            {% csrf_token %}
-
-            <!-- Display each form -->
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-
-            <!-- Provide a button to click to submit the form. -->
-            <input type="submit" name="submit" value="Sign Up" />
-            </form>
-        {% endif %}
+        <div class="textBox">Login to SkyView</div>
+        <form id="login_form" method="post" action="{% url 'website:login' %}">
+        {% csrf_token %}
+        Username: <input type="text" name="username" value="" size="50" />
+        <br />
+        Password: <input type="password" name="password" value="" size="50" />
+        <br />
+        <input type="submit" value="submit" />
+        </form>
     </div>
 </body>
 </html>

@@ -1,7 +1,9 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 {% load staticfiles %}
+
 {% load website_template_tags %}
+
 <head>
     <meta charset="utf-8"/>
     <title>SkyView</title>
@@ -9,20 +11,27 @@
 </head>
 
 <body>
-
     <div id="navbar">
         <div class="opacityBg"></div>
-        <a href="\"><div class="textBox button">Home</div></a>
-        <a href="\Planet\"><div class="textBox button">Planets</div></a>
-        <a href="\SignIn\"><div class="textBox button">Sign In</div></a>
-        <a href="\SignUp\"><div class="textBox button">Sign Up</div></a>
+        <ul style="margin:auto;">
+            <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
+            <li class="textBox button"><a href="{% url 'website:feed' %}">Feed</a></li>
+            <li class="textBox button"><a href="{% url 'website:planet' %}">Planets</a></li>
+            {% if user.is_authenticated %}
+            <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
+            <li class="textBox button"><a href="">Post</a></li>
+            {% else %}
+            <li class="textBox button"><a href="{% url 'website:signUp' %}">Sign Up</a></li>
+            <li class="textBox button"><a href="{% url 'website:login' %}">Login</a></li>
+            {% endif %}
+        </ul>
     </div>
 
     {% planets_carousel %}
 
     <div class="content" id="feed">
         <div class="opacityBg"></div>
-        <div class="textBox" style="margin-left:3%;">Feed</div>
+        <a href="\Feed\"><div class="textBox" style="margin-left:3%;">Feed</div></a>
         <div class="feedBox">
             <div class="item" style="position:relative">
                 <img class="pfp" src="{% static 'images/pfp.png' %}" />
