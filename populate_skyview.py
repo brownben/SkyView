@@ -1,18 +1,22 @@
 import os
+import sys
 
+sys.path.append("Skyview/")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "SkyView.settings")
 import django
+
+django.setup()
+from django.contrib.auth.models import User
+
 from django.db import models
 from django.core.files import File
 
-django.setup()
-from website.models import Planet, Post, Comment, Reaction
+from website.models import Planet, Post, Comment, Reaction, UserProfile
 
 
 planets = [
     {
         "name": "Mercury",
-        "slug": "mercury",
         "description": "The Planet Closest to the Sun.",
         "data": {
             "averageDistanceFromSun": "57,900,000 km ",
@@ -28,7 +32,6 @@ planets = [
     },
     {
         "name": "Venus",
-        "slug": "venus",
         "description": "Another Planet",
         "data": {
             "averageDistanceFromSun": "108,160,000 km",
@@ -44,7 +47,6 @@ planets = [
     },
     {
         "name": "Earth",
-        "slug": "earth",
         "description": "The Planet We Live On.",
         "data": {
             "averageDistanceFromSun": "149,600,000 km",
@@ -60,7 +62,6 @@ planets = [
     },
     {
         "name": "Mars",
-        "slug": "mars",
         "description": "The Red Planet.",
         "data": {
             "averageDistanceFromSun": "227,936,640 km",
@@ -76,7 +77,6 @@ planets = [
     },
     {
         "name": "Jupiter",
-        "slug": "jupiter",
         "description": "The Biggest Planet.",
         "data": {
             "averageDistanceFromSun": "778,369,000 km",
@@ -92,7 +92,6 @@ planets = [
     },
     {
         "name": "Saturn",
-        "slug": "saturn",
         "description": "The One With Rings.",
         "data": {
             "averageDistanceFromSun": "1,427,034,000 km",
@@ -108,7 +107,6 @@ planets = [
     },
     {
         "name": "Uranus",
-        "slug": "uranus",
         "description": "Cold and Far Away.",
         "data": {
             "averageDistanceFromSun": "2,870,658,186 km",
@@ -124,7 +122,6 @@ planets = [
     },
     {
         "name": "Neptune",
-        "slug": "neptune",
         "description": "The Last Planet.",
         "data": {
             "averageDistanceFromSun": "4,496,976,000 km",
@@ -140,16 +137,80 @@ planets = [
     },
 ]
 
+users = [
+    {
+        "username": "Alice",
+        "first_name": "Alice",
+        "last_name": "Wilson",
+        "email": "alice@gmail.com",
+        "password": "HaveFunGoMad",
+    },
+    {
+        "username": "Bob",
+        "first_name": "Bob",
+        "last_name": "Jones",
+        "email": "bob@gmail.com",
+        "password": "StapleHorseBattery",
+    },
+    {
+        "username": "c_web",
+        "first_name": "Charlotte",
+        "last_name": "Webber",
+        "email": "c@gmail.com",
+        "password": "ThisIsABrilliantPassword",
+    },
+]
+
+posts = [
+    {
+        "planet_name": "Earth",
+        "heading": "Space Junk? Will We Get Rings Like Saturn?",
+        "image": "./static/images/saturn.png",
+        "username": "Bob",
+        "body": "Lets have a discussion about what we can do to stop the enormous amounts of space junk gathering in Earths Orbit.",
+    },
+    {
+        "planet_name": "Mars",
+        "heading": "It Landed!",
+        "image": "./static/images/rover.jpg",
+        "username": "Bob",
+        "body": "The rover managed to land on mars",
+    },
+    {
+        "planet_name": "Jupiter",
+        "heading": "This Is My First Post",
+        "image": "",
+        "username": "c_web",
+        "body": "This is my first post on SkyView isn't it really cool",
+    },
+]
+
 
 def populate():
+    for user in users:
+        add_user(**user)
+
     for planet in planets:
         add_planet(**planet)
 
+    for post in posts:
+        add_post(**post)
 
-def add_planet(name, slug, description, data, image):
-    planet = Planet.objects.get_or_create(
-        name=name, slug=slug, description=description, data=data
-    )[0]
+
+def add_user(username, password, first_name, last_name, email):
+    new_user = User.objects.get_or_create(username=username)[0]
+    new_user.password = password
+    new_user.first_name = first_name
+    new_user.last_name = last_name
+    new_user.email = email
+    new_user.save()
+
+    p = UserProfile.objects.get_or_create(user_id=new_user.id)[0]
+    p.save()
+
+
+def add_planet(name, description, data, image):
+    planet = Planet.objects.get_or_create(name=name)[0]
     planet.name = name
     planet.description = description
     planet.data = data
@@ -161,6 +222,25 @@ def add_planet(name, slug, description, data, image):
 
     print(f"- Added Planet: {planet.name}")
     return planet
+
+
+def add_post(planet_name, heading, username, image, body):
+    planet = Planet.objects.get(name=planet_name)
+    creator = User.objects.get(username=username)
+    creatorProfile = UserProfile.objects.get(user=creator)
+
+    post = Post.objects.get_or_create(
+        heading=heading, planet=planet, creator=creatorProfile
+    )[0]
+    post.body = body
+
+    image_file = File(open(image, "rb"))
+    post.image.save(f"{planet.name}.png", image_file, save=True)
+
+    post.save()
+
+    print(f"- Added Post: {heading} by {creator.username} #‎{planet_name}")
+    return post
 
 
 if __name__ == "__main__":

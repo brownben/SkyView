@@ -1,8 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 import json
 
 slug = models.SlugField(unique=True)
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    website = models.URLField(blank=True)
+    picture = models.ImageField(upload_to="profile_images", blank=True)
+
+    def __str__(self):
+        return self.user.username
+
 
 class Planet(models.Model):
     name = models.CharField(max_length=20)
@@ -15,6 +26,8 @@ class Planet(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+
         if type(self.data) != type(""):
             self.data = json.dumps(self.data)
 
@@ -31,21 +44,26 @@ class Planet(models.Model):
 class Post(models.Model):
     planet = models.ForeignKey(Planet, on_delete=models.CASCADE)
     heading = models.CharField(max_length=200)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    creator = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="posts", blank=True)
     body = models.TextField()
     slug = models.SlugField()
-    time_created = models.DateTimeField()
+    time_created = models.DateTimeField(auto_now=False, auto_now_add=True)
 
     def __str__(self):
         return self.heading
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.heading)
+
+        super().save(*args, **kwargs)
+
 
 class Reaction(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     type = models.CharField(max_length=10)
-    time_created = models.DateTimeField()
+    time_created = models.DateTimeField(auto_now=False, auto_now_add=True)
 
     def __str__(self):
         return self.id
@@ -53,18 +71,9 @@ class Reaction(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    time_created = models.DateTimeField()
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    time_created = models.DateTimeField(auto_now=False, auto_now_add=True)
     body = models.TextField()
 
     def __str__(self):
         return self.id
-
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    website = models.URLField(blank=True)
-    picture = models.ImageField(upload_to="profile_images", blank=True)
-
-    def __str__(self):
-        return self.user.username
