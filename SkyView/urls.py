@@ -34,4 +34,6 @@ urlpatterns = [
     path("SignUp/", views.signUp, name="sign up"),
     path("admin/", admin.site.urls),
     path("website/", include("website.urls")),
+    path('Planet/<slug:planet_name_slug>/', \
+        views.planet, name='planet'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

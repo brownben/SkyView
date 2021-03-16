@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+slug = models.SlugField(unique=True)
 
 class Planet(models.Model):
     name = models.CharField(max_length=20)
