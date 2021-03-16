@@ -185,6 +185,41 @@ posts = [
     },
 ]
 
+comments = [
+    {
+        "username": "Alice",
+        "post_title": "This Is My First Post",
+        "body": "Welcome! Glad You Are Hear!",
+    },
+    {
+        "username": "Alice",
+        "post_title": "This Is My First Post",
+        "body": "What is your favourite constellation",
+    },
+    {"username": "c_web", "post_title": "This Is My First Post", "body": "Orion"},
+    {
+        "username": "Alice",
+        "post_title": "It Landed!",
+        "body": "Yeah, the landing was gripping. I couldn't focus on any of the other work I had to do",
+    },
+]
+
+reactions = [
+    {"username": "Alice", "post_title": "It Landed!", "reaction_type": "like"},
+    {"username": "Bob", "post_title": "It Landed!", "reaction_type": "like"},
+    {
+        "username": "Alice",
+        "post_title": "This Is My First Post",
+        "reaction_type": "like",
+    },
+    {"username": "Bob", "post_title": "This Is My First Post", "reaction_type": "like"},
+    {
+        "username": "c_web",
+        "post_title": "This Is My First Post",
+        "reaction_type": "like",
+    },
+]
+
 
 def populate():
     for user in users:
@@ -195,6 +230,12 @@ def populate():
 
     for post in posts:
         add_post(**post)
+
+    for comment in comments:
+        add_comment(**comment)
+
+    for reaction in reactions:
+        add_reaction(**reaction)
 
 
 def add_user(username, password, first_name, last_name, email):
@@ -234,13 +275,44 @@ def add_post(planet_name, heading, username, image, body):
     )[0]
     post.body = body
 
-    image_file = File(open(image, "rb"))
-    post.image.save(f"{planet.name}.png", image_file, save=True)
+    if image:
+        image_file = File(open(image, "rb"))
+        post.image.save(f"{planet.name}.png", image_file, save=True)
 
     post.save()
 
     print(f"- Added Post: {heading} by {creator.username} #‎{planet_name}")
     return post
+
+
+def add_comment(post_title, username, body):
+    post = Post.objects.get(heading=post_title)
+    creator = User.objects.get(username=username)
+    creatorProfile = UserProfile.objects.get(user=creator)
+
+    comment = Comment.objects.get_or_create(post=post, user=creatorProfile, body=body)[
+        0
+    ]
+    comment.save()
+
+    print(f'- Added Comment "{body}" from {username} to the post "{post.heading}"')
+    return comment
+
+
+def add_reaction(post_title, username, reaction_type):
+    post = Post.objects.get(heading=post_title)
+    creator = User.objects.get(username=username)
+    creatorProfile = UserProfile.objects.get(user=creator)
+
+    reaction = Reaction.objects.get_or_create(
+        post=post, user=creatorProfile, type=reaction_type
+    )[0]
+    reaction.save()
+
+    print(
+        f'- Added Reaction "{reaction_type}" from {username} to Post "{post.heading}"'
+    )
+    return reaction
 
 
 if __name__ == "__main__":
