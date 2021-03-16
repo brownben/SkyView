@@ -38,17 +38,9 @@ def home(request):
     return render(request, 'SkyView/home.html')
 
 # planet page
-def planet(request, planet_name_slug):  
-    context_dict = {}
-    #try:
-    print("looking for:", planet_name_slug)
-    planet = Planet.objects.get(slug=planet_name_slug)
-    print("planet: ", planet)
-    context_dict["planet"] = planet
-    #except Planet.DoesNotExist:
-    #    print("planet not found")
-    #    context_dict["planet"] = None
-    return render(request, 'SkyView/planet.html', context=context_dict)
+def planet(request, planet_name_slug):
+    planetObject = Planet.objects.get(slug=planet_name_slug.lower())
+    return render(request, 'SkyView/planet.html', context=planetObject.statistics)
 
 # single post page
 def post(request):
