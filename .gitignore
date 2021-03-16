@@ -127,3 +127,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# dont track migrations
+**/migrations/**
+
+# editor files
+**/.vs/**
+.vscode/**
+
+# user uploaded images
+media/**

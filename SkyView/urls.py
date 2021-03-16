@@ -21,15 +21,19 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('', views.home, name = 'home'),
-    path('Planet/', views.planet, name = 'planet'), # should ideally have name of specific planet
-    path('Feed/', views.feed, name = 'feed'),
-    path('Feed/NewPost/', views.createPost, name = 'create post'), # this should have the name of the specific planet
-    path('Post/', views.post, name = 'view post'),
-    path('SignIn/MyProfile', views.profile, name = 'my profile'),
-    path('SignUp/', views.signUp, name = 'sign up'),
-    path('admin/', admin.site.urls),
-    path('website/', include('website.urls')),
-] # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-# templates missing a few sites, therefore not included in views and urls yet
+    path("", views.home, name="home"),
+    path(
+        "Planet/", views.planet, name="planet"
+    ),  # should ideally have name of specific planet
+    path("Feed/", views.feed, name="feed"),
+    path(
+        "Feed/NewPost/", views.createPost, name="create post"
+    ),  # this should have the name of the specific planet
+    path("Post/", views.post, name="view post"),
+    path("SignIn/MyProfile", views.profile, name="my profile"),
+    path("SignUp/", views.signUp, name="sign up"),
+    path("admin/", admin.site.urls),
+    path("website/", include("website.urls")),
+    path('Planet/<slug:planet_name_slug>/', \
+        views.planet, name='planet'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

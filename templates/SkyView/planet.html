@@ -1,25 +1,68 @@
 <!DOCTYPE html>
 
+
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% load staticfiles %}
+
 <head>
     <meta charset="utf-8" />
     <title>SkyView</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 
 <body>
     <div id="navbar">
-        <div class="textBox button">Home</div>
-        <div class="textBox button">Planets</div>
-        <div class="textBox button">Sign In</div>
-        <div class="textBox button">Sign Up</div>
+        <div class="opacityBg"></div>
+        <ul style="margin:auto;">
+            <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
+            <li class="textBox button"><a href="{% url 'website:feed' %}">Feed</a></li>
+            <li class="textBox button"><a href="{% url 'website:planet' %}">Planets</a></li>
+            {% if user.is_authenticated %}
+            <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
+            <li class="textBox button"><a href="">Post</a></li>
+            {% else %}
+            <li class="textBox button"><a href="{% url 'website:signUp' %}">Sign Up</a></li>
+            <li class="textBox button"><a href="{% url 'website:login' %}">Login</a></li>
+            {% endif %}
+        </ul>
     </div>
-
-    <div>
-
-
-
+    <div id="planetImg" src="{{ planet.image }}"></div>
+    <div class="content">
+        <div class="opacityBg"></div>
+        <table>
+            <tr>
+                <th>Mass</th>
+                <td>{planet.mass}</td>
+            </tr>
+            <tr>
+                <th>Radius</th>
+                <td>{planet.radius}</td>
+            </tr>
+            <tr>
+                <th>Volume</th>
+                <td>{planet.volume}</td>
+            </tr>
+            <tr>
+                <th>Gravity</th>
+                <td>{planet.gravity}</td>
+            </tr>
+            <tr>
+                <th>Tempreature</th>
+                <td>{planet.temp}</td>
+            </tr>
+            <tr>
+                <th>Satelites</th>
+                <td>{planet.satelites}</td>
+            </tr>
+            <tr>
+                <th>Water</th>
+                <td>{planet.water}</td>
+            </tr>
+            <tr>
+                <th>Specialities</th>
+                <td>{planet.specialities}</td>
+            </tr>
+        </table>
     </div>
 
 </body>

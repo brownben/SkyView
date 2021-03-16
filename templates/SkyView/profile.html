@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% load staticfiles %}
+<head>
+    <meta charset="utf-8" />
+    <title>SkyView: Profile</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body>
+
+    <div id="navbar">
+        <div class="opacityBg"></div>
+        <ul style="margin:auto;">
+            <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
+            <li class="textBox button"><a href="{% url 'website:feed' %}">Feed</a></li>
+            <li class="textBox button"><a href="{% url 'website:planet' %}">Planets</a></li>
+            {% if user.is_authenticated %}
+            <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
+            <li class="textBox button"><a href="">Post</a></li>
+            {% else %}
+            <li class="textBox button"><a href="{% url 'website:signUp' %}">Sign Up</a></li>
+            <li class="textBox button"><a href="{% url 'website:login' %}">Login</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <!-- Heading could go here -->
+    <div class="centre content">
+        <img src=""/>
+        <div>
+            <!--user detail boxes here -->
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="opacityBg"></div>
+        <div class="textBox" style="margin:auto;">Your Posts and Comments</div>
+        <!--if user has posts, 
+          for all of them display feed box-->
+    </div>
+
+</body>
+
+</html>

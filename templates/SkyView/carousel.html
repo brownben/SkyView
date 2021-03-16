@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'styles/carousel.css' %}" />
+<section class="carousel-container">
+  <div class="carousel">
+    {% for planet in planets %}
+    <div id="{{ planet.slug }}" class="carousel__item">
+      <img
+        src="{{ planet.image.url }}"
+        alt="A Picture of {{ planet.name }}"
+        loading="lazy"
+      />
+      <div class="carousel__hover-overlay">
+        <h2>{{ planet.name }}</h2>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div id="controls" class="controls">
+    {% for planet in planets %}
+    <a href="#{{ planet.slug }}" class="controls__dot">
+      <span class="sr-only">The Planet {{ planet.name }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+<script type="module" src="{% static 'scripts/carousel.js' %}"></script>
