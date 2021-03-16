@@ -12,10 +12,11 @@
 
 <body>
     <div id="navbar">
-        <ul>
+        <div class="opacityBg"></div>
+        <ul style="margin:auto;">
             <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
-            <li class="textBox button"><a href="">Feed</a></li>
-            <li class="textBox button"><a href="">Planets</a></li>
+            <li class="textBox button"><a href="{% url 'website:feed' %}">Feed</a></li>
+            <li class="textBox button"><a href="{% url 'website:planet' %}">Planets</a></li>
             {% if user.is_authenticated %}
             <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
             <li class="textBox button"><a href="">Post</a></li>
@@ -43,8 +44,7 @@
 
     </div>
 
-    <div id="pictureBox">
-        <img id="nasaPicture" alt="NASA Picture of the Day" />
+    <div id="nasaPictureContainer">
     </div>
     <script type="module" src="{% static 'scripts/nasaPictureOfTheDay.js' %}"></script>
 </body>

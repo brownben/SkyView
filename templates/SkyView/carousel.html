@@ -7,9 +7,11 @@
       <img
         src="{{ planet.image.url }}"
         alt="A Picture of {{ planet.name }}"
-        class="carousel__image"
         loading="lazy"
       />
+      <div class="carousel__hover-overlay">
+        <h2>{{ planet.name }}</h2>
+      </div>
     </div>
     {% endfor %}
   </div>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -11,10 +11,11 @@
 
 <body>
     <div id="navbar">
-        <ul>
+        <div class="opacityBg"></div>
+        <ul style="margin:auto;">
             <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
-            <li class="textBox button"><a href="">Feed</a></li>
-            <li class="textBox button"><a href="">Planets</a></li>
+            <li class="textBox button"><a href="{% url 'website:feed' %}">Feed</a></li>
+            <li class="textBox button"><a href="{% url 'website:planet' %}">Planets</a></li>
             {% if user.is_authenticated %}
             <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
             <li class="textBox button"><a href="">Post</a></li>
@@ -22,12 +23,11 @@
             <li class="textBox button"><a href="{% url 'website:signUp' %}">Sign Up</a></li>
             <li class="textBox button"><a href="{% url 'website:login' %}">Login</a></li>
             {% endif %}
-
-
         </ul>
     </div>
-    <div>
-        <h1>Login to SkyView</h1>
+    <div class="content">
+        <div class="opacityBg"></div>
+        <div class="textBox">Login to SkyView</div>
         <form id="login_form" method="post" action="{% url 'website:login' %}">
         {% csrf_token %}
         Username: <input type="text" name="username" value="" size="50" />
