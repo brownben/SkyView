@@ -1,41 +1,26 @@
-<!DOCTYPE html>
-
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% extends 'SkyView/base.html' %}
 {% load staticfiles %}
-<head>
-    <meta charset="utf-8" />
-    <title>SkyView</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
 
-<body>
-    <div id="navbar">
-        <ul>
-            <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
-            <li class="textBox button"><a href="">Feed</a></li>
-            <li class="textBox button"><a href="">Planets</a></li>
-            {% if user.is_authenticated %}
-            <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
-            <li class="textBox button"><a href="">Post</a></li>
-            {% else %}
-            <li class="textBox button"><a href="{% url 'website:signUp' %}">Sign Up</a></li>
-            <li class="textBox button"><a href="{% url 'website:login' %}">Login</a></li>
-            {% endif %}
+{% block title_block %}
+    Login
+{% endblock %}
 
-
-        </ul>
+{% block body_block %}
+    <div class="content">
+        <div class="opacityBg"></div>
+        <div class="textBox" style="margin-left:25%; text-align:center; width:50%;"><strong>Login to SkyView</strong></div>
+            <form class="formplace" id="login_form" method="post" action="{% url 'website:login' %}">
+                {% csrf_token %}
+                <p>
+                <label style="font-family: 'Comfortaa', cursive;">Username</label>
+                <input class="formfield" type="text" name="username" value="" size="50" />
+                <br /></p>
+                <p>
+                <label style="font-family: 'Comfortaa', cursive;">Password</label>
+                <input class="formfield" type="password" name="password" value="" size="50" />
+                <br /></p>
+            
+                <div style="margin-left:40%; text-align:center; width:20%;"><input class="subm" type="submit" value="Login" /></div>
+            </form>
     </div>
-    <div>
-        <h1>Login to SkyView</h1>
-        <form id="login_form" method="post" action="{% url 'website:login' %}">
-        {% csrf_token %}
-        Username: <input type="text" name="username" value="" size="50" />
-        <br />
-        Password: <input type="password" name="password" value="" size="50" />
-        <br />
-        <input type="submit" value="submit" />
-        </form>
-    </div>
-</body>
-</html>
+{% endblock %}

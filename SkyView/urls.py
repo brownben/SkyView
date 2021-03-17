@@ -30,6 +30,7 @@ urlpatterns = [
         "Feed/NewPost/", views.createPost, name="create post"
     ),  # this should have the name of the specific planet
     path("Post/", views.post, name="view post"),
+    path('SignIn/', views.user_login, name='login'),
     path("SignIn/MyProfile", views.profile, name="my profile"),
     path("SignUp/", views.signUp, name="sign up"),
     path("admin/", admin.site.urls),

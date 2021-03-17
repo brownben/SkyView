@@ -1,36 +1,36 @@
 <!DOCTYPE html>
-<html>
-    {% load staticfiles %}
-    {% load rango_template_tags %}
-<head lang="en">
-    <meta charset="utf-8" />
-    <title>
-        SkyView:
-        {% block title_block %}
-        Start Your Journey Here
-        {% endblock %}
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
 
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% load staticfiles %}
+
+<head>
+    <meta charset="utf-8" />
+    {% block title_block %}
+        SkyView
+    {% endblock %}
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
+
 <body>
     <div id="navbar">
-        <ul>
-            <li class="textBox button"><a href="">Home</a></li>
-            <li class="textBox button"><a href="">Feed</a></li>
-            <li class="textBox button"><a href="">Planets</a></li>
+        <div class="opacityBg"></div>
+            <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
+            <li class="textBox button"><a href="{% url 'website:feed' %}">Feed</a></li>
+            <li class="textBox button"><a href="{% url 'website:planet' %}">Planets</a></li>
             {% if user.is_authenticated %}
-            <li class="textBox button"><a href="">Logout</a></li>
-            <li class="textBox button"><a href="">Post</a></li>
+            <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
+            <li class="textBox button"><a href="{% url 'website:my profile' %}">Profile</a></li>
+            <li class="textBox button"><a href="{% url 'website:create post' %}">Post</a></li>
             {% else %}
-            <li class="textBox button"><a href="">Sign Up</a></li>
-            <li class="textBox button"><a href="">Login</a></li>
+            <li class="textBox button"><a href="{% url 'website:signUp' %}">Sign Up</a></li>
+            <li class="textBox button"><a href="{% url 'website:login' %}">Login</a></li>
             {% endif %}
-
-
-        </ul>
     </div>
 
+    
+{% block body_block %}
+{% endblock %}
 </body>
+
 </html>
