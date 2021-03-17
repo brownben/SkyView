@@ -29,19 +29,20 @@
 
     {% planets_carousel %}
 
-    <div class="content" id="feed">
+    <div class="content" id="feed">        
         <div class="opacityBg"></div>
         <a href="\Feed\"><div class="textBox" style="margin-left:3%;">Feed</div></a>
-        <div class="feedBox">
-            <div class="item" style="position:relative">
-                <img class="pfp" src="{% static 'images/pfp.png' %}" />
-                <div class="post">
-                    <h3 class="textBox">Title</h3>
-                    <p class="textBox">bkjsfjvownvowmkpsnvnvp nosdjcnosjdcno. </p>
+        {% for post in recentPosts %}
+            <div class="feedBox">
+                <div class="item" style="position:relative">
+                    <img class="pfp" src="{% static 'images/pfp.png' %}" />
+                    <div class="post">
+                        <h3 class="textBox">{{post.heading}}</h3>
+                        <p class="textBox">{{post.body}}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        {% endfor %}
     </div>
 
     <div id="nasaPictureContainer">

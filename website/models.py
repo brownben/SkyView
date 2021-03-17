@@ -5,7 +5,6 @@ import json
 
 slug = models.SlugField(unique=True)
 
-
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     website = models.URLField(blank=True)
