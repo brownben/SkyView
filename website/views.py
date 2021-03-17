@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from website.models import Planet
+from website.models import Planet, Post
 from django.template.defaultfilters import slugify
 
 # post creation page
@@ -19,7 +19,10 @@ def feed(request):
 
 # home page
 def home(request):
-    return render(request, 'SkyView/home.html')
+    contextDict = {}
+    contextDict['recentPosts'] = Post.objects.order_by('time_created')[:5]
+    contextDict['isLoggedIn'] = request.user.is_authenticated
+    return render(request, 'SkyView/home.html', context = contextDict)
 
 # planet page
 def planet(request, planet_name_slug):
