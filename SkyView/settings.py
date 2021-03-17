@@ -14,9 +14,13 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+<<<<<<< HEAD
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+=======
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 MEDIA_DIR = os.path.join(BASE_DIR, "media")
+>>>>>>> 346ee1cfc09806a3b59dc999f581bba351a5ce9f
 
 
 # Quick-start development settings - unsuitable for production

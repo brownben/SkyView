@@ -8,22 +8,6 @@ from django.contrib.auth.decorators import login_required
 from website.models import Planet
 from django.template.defaultfilters import slugify
 
-mercury = {
-    "mass" : "3.3011 x 10^23 kg",
-    "radius" : "2,439.7 ± 1.0 km",
-    "Volume" : "6.083 × 1010 km^3",
-    "Gravity" : "3.7 ms^-2",
-    "Temperature" : "-180°C to 430 °C / -290°F to 800°F",
-    "Satellites" : "0",
-    "Water" : "in frozen form",
-    "Specialties" : "Closest to the sun, smallest planet"    
-}
-
-planets = {
-    "Mercury" : mercury,
-    "Venus" : {}
-}
-
 # post creation page
 @login_required
 def createPost(request):
@@ -38,17 +22,9 @@ def home(request):
     return render(request, 'SkyView/home.html')
 
 # planet page
-def planet(request, planet_name_slug):  
-    context_dict = {}
-    #try:
-    print("looking for:", planet_name_slug)
-    planet = Planet.objects.get(slug=planet_name_slug)
-    print("planet: ", planet)
-    context_dict["planet"] = planet
-    #except Planet.DoesNotExist:
-    #    print("planet not found")
-    #    context_dict["planet"] = None
-    return render(request, 'SkyView/planet.html', context=context_dict)
+def planet(request, planet_name_slug):
+    planetObject = Planet.objects.get(slug=planet_name_slug.lower())
+    return render(request, 'SkyView/planet.html', context=planetObject.statistics)
 
 # single post page
 def post(request):
