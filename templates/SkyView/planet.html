@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -13,10 +13,18 @@
 <body>
     <div id="navbar">
         <div class="opacityBg"></div>
-        <a href="\"><div class="textBox button">Home</div></a>
-        <a href="\Planet\"><div class="textBox button">Planets</div></a>
-        <a href="\SignIn\"><div class="textBox button">Sign In</div></a>
-        <a href="\SignUp\"><div class="textBox button">Sign Up</div></a>
+        <ul style="margin:auto;">
+            <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
+            <li class="textBox button"><a href="{% url 'website:feed' %}">Feed</a></li>
+            <li class="textBox button"><a href="{% url 'website:planet' %}">Planets</a></li>
+            {% if user.is_authenticated %}
+            <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
+            <li class="textBox button"><a href="">Post</a></li>
+            {% else %}
+            <li class="textBox button"><a href="{% url 'website:signUp' %}">Sign Up</a></li>
+            <li class="textBox button"><a href="{% url 'website:login' %}">Login</a></li>
+            {% endif %}
+        </ul>
     </div>
     <div id="planetImg" src="{{ planet.image }}"></div>
     <div class="content">
@@ -24,35 +32,51 @@
         <table>
             <tr>
                 <th>Mass</th>
-                <td>{planet.mass}</td>
+                <td>{{mass}}</td>
             </tr>
             <tr>
-                <th>Radius</th>
-                <td>{planet.radius}</td>
+                <th>Diameter</th>
+                <td>{{diameter}}</td>
             </tr>
             <tr>
                 <th>Volume</th>
-                <td>{planet.volume}</td>
+                <td>{{volume}}</td>
             </tr>
             <tr>
                 <th>Gravity</th>
-                <td>{planet.gravity}</td>
+                <td>{{gravity}}</td>
             </tr>
             <tr>
-                <th>Tempreature</th>
-                <td>{planet.temp}</td>
+                <th>Temperature</th>
+                <td>{{averageTemperature}}</td>
             </tr>
             <tr>
-                <th>Satelites</th>
-                <td>{planet.satelites}</td>
+                <th>Moons</th>
+                <td>{{numberOfMoons}}</td>
+            </tr>
+            <tr>
+                <th>Average Distance from Sun</th>
+                <td>{{averageDistanceFromSun}}</td>
+            </tr>
+            <tr>
+                <th>Length of One Day</th>
+                <td>{{lengthOfDay}}</td>
+            </tr>
+            <tr>
+                <th>Length of One Year</th>
+                <td>{{lengthOfYear}}</td>
+            </tr>
+            <tr>
+                <th>Atmosphere</th>
+                <td>{{contentsOfAtmosphere}}</td>
             </tr>
             <tr>
                 <th>Water</th>
-                <td>{planet.water}</td>
+                <td>{{water}}</td>
             </tr>
             <tr>
-                <th>Specialities</th>
-                <td>{planet.specialities}</td>
+                <th>Specialties</th>
+                <td>{{specialties}}</td>
             </tr>
         </table>
     </div>

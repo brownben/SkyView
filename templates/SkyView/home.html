@@ -12,10 +12,11 @@
 
 <body>
     <div id="navbar">
-        <ul>
+        <div class="opacityBg"></div>
+        <ul style="margin:auto;">
             <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
-            <li class="textBox button"><a href="">Feed</a></li>
-            <li class="textBox button"><a href="">Planets</a></li>
+            <li class="textBox button"><a href="{% url 'website:feed' %}">Feed</a></li>
+            <li class="textBox button"><a href="{% url 'website:planet' %}">Planets</a></li>
             {% if user.is_authenticated %}
             <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
             <li class="textBox button"><a href="">Post</a></li>
@@ -28,23 +29,23 @@
 
     {% planets_carousel %}
 
-    <div class="content" id="feed">
+    <div class="content" id="feed">        
         <div class="opacityBg"></div>
         <a href="\Feed\"><div class="textBox" style="margin-left:3%;">Feed</div></a>
-        <div class="feedBox">
-            <div class="item" style="position:relative">
-                <img class="pfp" src="{% static 'images/pfp.png' %}" />
-                <div class="post">
-                    <h3 class="textBox">Title</h3>
-                    <p class="textBox">bkjsfjvownvowmkpsnvnvp nosdjcnosjdcno. </p>
+        {% for post in recentPosts %}
+            <div class="feedBox">
+                <div class="item" style="position:relative">
+                    <img class="pfp" src="{% static 'images/pfp.png' %}" />
+                    <div class="post">
+                        <h3 class="textBox">{{post.heading}}</h3>
+                        <p class="textBox">{{post.body}}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        {% endfor %}
     </div>
 
-    <div id="pictureBox">
-        <img id="nasaPicture" alt="NASA Picture of the Day" />
+    <div id="nasaPictureContainer">
     </div>
     <script type="module" src="{% static 'scripts/nasaPictureOfTheDay.js' %}"></script>
 </body>

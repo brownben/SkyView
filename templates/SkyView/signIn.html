@@ -12,10 +12,18 @@
 
     <div id="navbar">
         <div class="opacityBg"></div>
-        <a href="\"><div class="textBox button">Home</div></a>
-        <a href="\Planet\"><div class="textBox button">Planets</div></a>
-        <a href="\SignIn\"><div class="textBox button">Sign In</div></a>
-        <a href="\SignUp\"><div class="textBox button">Sign Up</div></a>
+        <ul style="margin:auto;">
+            <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
+            <li class="textBox button"><a href="{% url 'website:feed' %}">Feed</a></li>
+            <li class="textBox button"><a href="{% url 'website:planet' %}">Planets</a></li>
+            {% if user.is_authenticated %}
+            <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
+            <li class="textBox button"><a href="">Post</a></li>
+            {% else %}
+            <li class="textBox button"><a href="{% url 'website:signUp' %}">Sign Up</a></li>
+            <li class="textBox button"><a href="{% url 'website:login' %}">Login</a></li>
+            {% endif %}
+        </ul>
     </div>
     <!-- Heading could go here -->
 

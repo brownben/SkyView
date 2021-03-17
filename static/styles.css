@@ -23,21 +23,6 @@ body {
 }
 
 
-
-#nasaPicture {
-    width: 100%;
-    max-width: 800px;
-    height: auto;
-    margin: auto;
-}
-
-#pictureBox{
-    width:70%;
-    margin:auto;
-
-}
-
-
 .opacityBg {
     border-radius: 30px;
     background-color: #747474;
@@ -118,14 +103,14 @@ a {
 
 /* home page attributes*/
 
-#nasaPicture {
+img#nasaPicture {
     width: 100%;
     max-width: 800px;
     height: auto;
     margin: auto;
 }
 
-#pictureBox{
+#nasaPictureContainer{
     width:70%;
     margin:auto;
 
@@ -145,10 +130,12 @@ th {
     text-align:left;
 }
 
-td{
-    color:white;
-    text-align:right;
+
+td {
+    color: white;
+    text-align: right;
 }
+
 .pfp{
     vertical-align:top;
     width:70px;
@@ -179,6 +166,7 @@ td{
     margin: 0px;
     padding: 5px;
 }
+
 
 /* user */
 .titleBox {
@@ -241,4 +229,5 @@ td{
     margin-left:37.5%;
     margin-bottom: 20px;
 }
+
 
