@@ -11,7 +11,7 @@ urlpatterns = [
     path('Post/', views.post, name = 'view post'),
     path('SignIn/MyProfile', views.profile, name = 'my profile'),
     path('SignUp/', views.signUp, name = 'signUp'),
-    path('login/', views.user_login, name='login'),
+    path('SignIn/', views.user_login, name='login'),
     path('restricted/', views.restricted, name='restricted'),
     path('logout/', views.user_logout, name='logout'),
     path('Planet/<slug:planet_name_slug>/', \

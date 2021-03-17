@@ -1,45 +1,57 @@
-﻿<!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% extends 'SkyView/base.html' %}
 {% load staticfiles %}
-<head>
-    <meta charset="utf-8" />
-    <title>SkyView: Profile</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
 
-<body>
+{% block title_block %}
+    SkyView: Profile
+{% endblock %}
 
-    <div id="navbar">
-        <div class="opacityBg"></div>
-        <ul style="margin:auto;">
-            <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
-            <li class="textBox button"><a href="{% url 'website:feed' %}">Feed</a></li>
-            <li class="textBox button"><a href="{% url 'website:planet' %}">Planets</a></li>
-            {% if user.is_authenticated %}
-            <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
-            <li class="textBox button"><a href="">Post</a></li>
-            {% else %}
-            <li class="textBox button"><a href="{% url 'website:signUp' %}">Sign Up</a></li>
-            <li class="textBox button"><a href="{% url 'website:login' %}">Login</a></li>
-            {% endif %}
-        </ul>
-    </div>
-    <!-- Heading could go here -->
-    <div class="centre content">
-        <img src=""/>
-        <div>
-            <!--user detail boxes here -->
-        </div>
-    </div>
+
+{% block body_block %}
 
     <div class="content">
         <div class="opacityBg"></div>
-        <div class="textBox" style="margin:auto;">Your Posts and Comments</div>
-        <!--if user has posts, 
-          for all of them display feed box-->
+        <div class="textBox" style="margin-left:25%; text-align:center; width:50%;">Your Posts and Comments</div>
+        
+            {% if user.picture %}
+                {{ user.picture }} 
+            {% else %}
+                <div><img class="pfpic" src="{% static 'images/pfp.png' %}" /></div>
+            {% endif %}
+            
+
+            <div class='titleBox'>{{ user.username }} </div>
+            <div class='titleBox'>{{ user.email }}</div>
+            {% if user.website %}
+                <div class='titleBox'> {{ user.website }} </div>
+            {% endif %}
+            <!--if user has posts, 
+            for all of them display feed box-->
+                <div class="content" id="feed">
+                    <div class="formplace">
+                    <!-- for all discussions in-->
+                    <div class="textBox" style="margin-left:3%;">Feed</div>
+                    <div class="feedBox">
+                        <div class="item" style="position:relative">
+                            <img class="pfp" src="{% static 'images/pfp.png' %}" />
+                            <div class="post">
+                                <h3 class="textBox">{post.title}</h3>
+                                <p class="textBox">{post.content}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feedBox">
+                        <div class="item" style="position:relative">
+                            <img class="pfp" src="{% static 'images/pfp.png' %}" />
+                            <div class="post">
+                                <h3 class="textBox">{post.title}</h3>
+                                <p class="textBox">{post.content}</p>
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+            
+    </div>
     </div>
 
-</body>
-
-</html>
+{% endblock %}

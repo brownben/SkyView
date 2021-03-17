@@ -130,6 +130,7 @@ th {
     text-align:left;
 }
 
+
 td {
     color: white;
     text-align: right;
@@ -165,3 +166,68 @@ td {
     margin: 0px;
     padding: 5px;
 }
+
+
+/* user */
+.titleBox {
+    z-index: 2;
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5px;
+    background-color: #E8E8E8;
+    border-radius: 10px;
+    font-family: 'Comfortaa', cursive;
+    margin-left:25%; text-align:center; width:50%;
+}
+
+.subm {
+    z-index: 2;
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5px;
+    background-color: #E8E8E8;
+    border-radius: 10px;
+    font-family: 'Comfortaa', cursive;
+    border-color: #E8E8E8;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+}
+
+.formfield {
+    border-radius:8px;
+    border:1px solid;
+    padding:8px;
+    display:block;
+    width:100%;
+    border-color: #E8E8E8;
+}
+
+.formplace {
+    border-radius:8px;
+    border:1px solid;
+    padding:8px;
+    display:block;
+    width:100%;
+    border-color: #E8E8E8;
+    background-color: #5d5d5d;
+}
+
+.pfpic{
+    vertical-align:top;
+    margin-top: 20px;
+    width:220px;
+    height:220px;
+    border-radius:20px;
+    display:inline-flex;
+    margin-left:37.5%;
+    margin-bottom: 20px;
+}
+
+
