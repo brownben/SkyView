@@ -7,8 +7,11 @@ class PlanetAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug" : ("heading", )}
 
+class UserAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug" : ("user", )}
+
 admin.site.register(Planet, PlanetAdmin)
-admin.site.register(UserProfile)
+admin.site.register(UserProfile, UserAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Reaction)
 admin.site.register(Comment)

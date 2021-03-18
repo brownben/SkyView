@@ -29,26 +29,22 @@
                 <div class="content" id="feed">
                     <div class="formplace">
                     <!-- for all discussions in-->
-                    <div class="textBox" style="margin-left:3%;">Feed</div>
+                    <div class="textBox" style="margin-left:3%;">My Posts</div>
                     <div class="feedBox">
-                        <div class="item" style="position:relative">
-                            <img class="pfp" src="{% static 'images/pfp.png' %}" />
-                            <div class="post">
-                                <h3 class="textBox">{post.title}</h3>
-                                <p class="textBox">{post.content}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="feedBox">
-                        <div class="item" style="position:relative">
-                            <img class="pfp" src="{% static 'images/pfp.png' %}" />
-                            <div class="post">
-                                <h3 class="textBox">{post.title}</h3>
-                                <p class="textBox">{post.content}</p>
-                            </div>
-                        </div>
-                    </div>
-            
+                        {% if not userPosts %}
+                            <h3>You haven't created any posts yet</h3>
+                        {% else %}
+                            {% for post in userPosts %}
+                                <div class="item" style="position:relative">
+                                    <img class="pfp" src="{% static 'images/pfp.png' %}" />
+                                    <div class="post">
+                                        <h3 class="textBox">{{post.title}}</h3>
+                                        <p class="textBox">{{post.content}}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>            
                 </div>
             
     </div>

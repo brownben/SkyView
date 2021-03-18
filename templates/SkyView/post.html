@@ -24,10 +24,10 @@
             <div class="item" style="position:relative">
                 <img class="pfp" src="{% static 'images/pfp.png' %}" />
                 <div class="post">
-                    <h3 class="textBox">Title</h3>
-                    <p class="textBox">bkjsfjvownvowmkpsnvnvp nosdjcnosjdcno. </p>
+                    <h3 class="textBox">{{heading}}</h3>
+                    <p class="textBox">{{body}} </p>
                     <!--if post has image-->
-                    <img src="{post.img}" style="display:inline-block" />
+                    <img src="{{image}}" style="display:inline-block" />
                 </div>
                 <!--if comments exist: for all comments in-->
 

@@ -5,8 +5,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from website.models import Planet, Post
+from website.models import Planet, Post, User, Reaction, Comment
 from django.template.defaultfilters import slugify
+from django.shortcuts import get_object_or_404
+from urllib.parse import unquote
 
 # post creation page
 @login_required
@@ -30,13 +32,31 @@ def planet(request, planet_name_slug):
     return render(request, 'SkyView/planet.html', context=planetObject.statistics)
 
 # single post page
-def post(request):
-    return render(request, 'SkyView/post.html')
+def post(request, post_name):
+    post = Post.objects.get(url_heading = unquote(post_name))
+    postDict = {}
+    postDict["planet"] = post.planet
+    postDict["heading"] = post.heading
+    postDict["creator"] = post.creator
+    postDict["image"] = post.image
+    postDict["body"] = post.body
+    postDict["slug"] = post.slug
+    postDict["time created"] = post.time_created
+    postDict["url heading"] = post.url_heading
+    likes = Reaction.objects.filter(post = post, type = "like")
+    postDict["likes"] = len(likes)
+    comments = Comment.objects.filter(post = post)
+    postDict["comments"] = comments
+    return render(request, 'SkyView/post.html', context=postDict)
 
 # profile page
 @login_required
 def profile(request):
-    return render(request, 'SkyView/profile.html')
+    try:
+        userPosts = Post.objects.get(creator_id = request.user.id)
+    except Post.DoesNotExist:
+        userPosts = None
+    return render(request, 'SkyView/profile.html', userPosts)
 
 # authentication page
 def signUp(request):
