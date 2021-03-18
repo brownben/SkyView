@@ -307,6 +307,7 @@ def add_post(planet_name, heading, username, image, body):
         heading=heading, planet=planet, creator=creatorProfile
     )[0]
     post.body = body
+    post.url_heading = heading.replace(" ", "_")
 
     if image:
         image_file = File(open(image, "rb"))

@@ -7,6 +7,7 @@ slug = models.SlugField(unique=True)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    slug = models.SlugField()
     website = models.URLField(blank=True)
     picture = models.ImageField(upload_to="profile_images", blank=True)
 
@@ -38,7 +39,7 @@ class Planet(models.Model):
             return json.loads(self.data)
         else:
             return self.data
-            
+                        
 
 class Post(models.Model):
     planet = models.ForeignKey(Planet, on_delete=models.CASCADE)
@@ -48,12 +49,13 @@ class Post(models.Model):
     body = models.TextField()
     slug = models.SlugField()
     time_created = models.DateTimeField(auto_now=False, auto_now_add=True)
+    url_heading = models.CharField(max_length=200)
 
     def __str__(self):
         return self.heading
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.heading)
+        self.slug = slugify(self.url_heading)
 
         super().save(*args, **kwargs)
 
@@ -65,7 +67,7 @@ class Reaction(models.Model):
     time_created = models.DateTimeField(auto_now=False, auto_now_add=True)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class Comment(models.Model):
@@ -75,5 +77,4 @@ class Comment(models.Model):
     body = models.TextField()
 
     def __str__(self):
-        return self.id
-
+        return str(self.id)
