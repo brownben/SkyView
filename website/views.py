@@ -13,27 +13,31 @@ from urllib.parse import unquote
 # post creation page
 @login_required
 def createPost(request):
-    return render(request, 'SkyView/createPost.html')
+    return render(request, "SkyView/createPost.html")
+
 
 # feed page
 def feed(request):
-    return render(request, 'SkyView/feed.html')
+    return render(request, "SkyView/feed.html")
+
 
 # home page
 def home(request):
     contextDict = {}
-    contextDict['recentPosts'] = Post.objects.order_by('time_created')[:5]
-    contextDict['isLoggedIn'] = request.user.is_authenticated
-    return render(request, 'SkyView/home.html', context = contextDict)
+    contextDict["recentPosts"] = Post.objects.order_by("time_created")[:5]
+    contextDict["isLoggedIn"] = request.user.is_authenticated
+    return render(request, "SkyView/home.html", context=contextDict)
+
 
 # planet page
 def planet(request, planet_name_slug):
     planetObject = Planet.objects.get(slug=planet_name_slug.lower())
-    return render(request, 'SkyView/planet.html', context=planetObject.statistics)
+    return render(request, "SkyView/planet.html", context=planetObject.statistics)
+
 
 # single post page
 def post(request, post_name):
-    post = Post.objects.get(url_heading = unquote(post_name))
+    post = Post.objects.get(slug=unquote(post_name))
     postDict = {}
     postDict["planet"] = post.planet
     postDict["heading"] = post.heading
@@ -42,21 +46,23 @@ def post(request, post_name):
     postDict["body"] = post.body
     postDict["slug"] = post.slug
     postDict["time created"] = post.time_created
-    postDict["url heading"] = post.url_heading
-    likes = Reaction.objects.filter(post = post, type = "like")
+
+    likes = Reaction.objects.filter(post=post, type="like")
     postDict["likes"] = len(likes)
-    comments = Comment.objects.filter(post = post)
+    comments = Comment.objects.filter(post=post)
     postDict["comments"] = comments
-    return render(request, 'SkyView/post.html', context=postDict)
+    return render(request, "SkyView/post.html", context=postDict)
+
 
 # profile page
 @login_required
 def profile(request):
     try:
-        userPosts = Post.objects.get(creator_id = request.user.id)
+        userPosts = Post.objects.get(creator_id=request.user.id)
     except Post.DoesNotExist:
         userPosts = None
-    return render(request, 'SkyView/profile.html', userPosts)
+    return render(request, "SkyView/profile.html", userPosts)
+
 
 # authentication page
 def signUp(request):
@@ -64,7 +70,7 @@ def signUp(request):
     # whether the registration was successful.
     registered = False
 
-    if request.method == 'POST':
+    if request.method == "POST":
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST)
 
@@ -78,8 +84,8 @@ def signUp(request):
             profile.user = user
 
             # profile picture if available
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
+            if "picture" in request.FILES:
+                profile.picture = request.FILES["picture"]
 
             profile.save()
 
@@ -93,39 +99,47 @@ def signUp(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'SkyView/signUp.html',
-                context = {'user_form': user_form,
-                            'profile_form': profile_form,
-                            'registered': registered})
+    return render(
+        request,
+        "SkyView/signUp.html",
+        context={
+            "user_form": user_form,
+            "profile_form": profile_form,
+            "registered": registered,
+        },
+    )
+
 
 def user_login(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         # Gather the username and password provided by the user
         # check if the combination is valid
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST.get("username")
+        password = request.POST.get("password")
         user = authenticate(username=username, password=password)
 
         if user:
             if user.is_active:
                 login(request, user)
-                return redirect(reverse('website:home'))
+                return redirect(reverse("website:home"))
             else:
                 return HttpResponse("Your account is disabled.")
 
         else:
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied.")
-        
+
     else:
         # No context variables to pass to the template system
-        return render(request, 'SkyView/login.html')
+        return render(request, "SkyView/login.html")
+
 
 @login_required
 def restricted(request):
     return HttpResponse("Since you're logged in, you can see this text!")
 
+
 @login_required
 def user_logout(request):
     logout(request)
-    return redirect(reverse('website:home'))
+    return redirect(reverse("website:home"))

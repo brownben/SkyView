@@ -39,7 +39,7 @@ class Planet(models.Model):
             return json.loads(self.data)
         else:
             return self.data
-                        
+
 
 class Post(models.Model):
     planet = models.ForeignKey(Planet, on_delete=models.CASCADE)
@@ -49,13 +49,12 @@ class Post(models.Model):
     body = models.TextField()
     slug = models.SlugField()
     time_created = models.DateTimeField(auto_now=False, auto_now_add=True)
-    url_heading = models.CharField(max_length=200)
 
     def __str__(self):
         return self.heading
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.url_heading)
+        self.slug = slugify(self.heading)
 
         super().save(*args, **kwargs)
 
