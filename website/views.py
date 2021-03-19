@@ -38,19 +38,21 @@ def planet(request, planet_name_slug):
 # single post page
 def post(request, post_name):
     post = Post.objects.get(slug=unquote(post_name))
-    postDict = {}
-    postDict["planet"] = post.planet
-    postDict["heading"] = post.heading
-    postDict["creator"] = post.creator
-    postDict["image"] = post.image
-    postDict["body"] = post.body
-    postDict["slug"] = post.slug
-    postDict["time created"] = post.time_created
-
     likes = Reaction.objects.filter(post=post, type="like")
-    postDict["likes"] = len(likes)
     comments = Comment.objects.filter(post=post)
-    postDict["comments"] = comments
+
+    postDict = {
+        "planet": post.planet,
+        "heading": post.heading,
+        "creator": post.creator,
+        "image": post.image,
+        "body": post.body,
+        "slug": post.slug,
+        "time created": post.time_created,
+        "numberOfLikes": len(likes),
+        "comments": comments,
+    }
+
     return render(request, "SkyView/post.html", context=postDict)
 
 
