@@ -1,20 +1,53 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'styles/carousel.css' %}" />
 <section class="carousel-container">
-  <div class="carousel">
-    {% for planet in planets %}
-    <div id="{{ planet.slug }}" class="carousel__item">
-      <img
-        src="{{ planet.image.url }}"
-        alt="A Picture of {{ planet.name }}"
-        loading="lazy"
-      />
-      <div class="carousel__hover-overlay">
-        <h2>{{ planet.name }}</h2>
+  <div class="carousel-main">
+    <button id="previous">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+    </button>
+    <div class="carousel">
+      {% for planet in planets %}
+      <div id="{{ planet.slug }}" class="carousel__item">
+        <img
+          src="{{ planet.image.url }}"
+          alt="A Picture of {{ planet.name }}"
+          loading="lazy"
+        />
+        <div class="carousel__hover-overlay">
+          <a href="{% url 'website:planet' planet.slug %}">{{ planet.name }}</a>
+        </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
+    <button id="next">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"
+        />
+      </svg>
+    </button>
   </div>
+
   <div id="controls" class="controls">
     {% for planet in planets %}
     <a href="#{{ planet.slug }}" class="controls__dot">
@@ -23,4 +56,5 @@
     {% endfor %}
   </div>
 </section>
+
 <script type="module" src="{% static 'scripts/carousel.js' %}"></script>

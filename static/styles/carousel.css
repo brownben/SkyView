@@ -27,8 +27,8 @@
 
 .carousel__item img {
   display: block;
-  height: 50vh;
-  max-width: 100vw;
+  max-height: 50vh;
+  max-width: 100%;
   transition: 0.5s;
 }
 
@@ -44,11 +44,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 5rem;
 }
 
-.carousel__hover-overlay h2 {
-  font-family: "Comfortaa", cursive;
+.carousel__hover-overlay a {
+  font-family: 'Comfortaa', cursive;
   font-size: 3rem;
+  color: black;
   background: #fff9;
   padding: 0.5rem 1.5rem;
   border-radius: 1rem;
@@ -56,7 +58,29 @@
   transition: 0.5s;
 }
 
-.carousel__item:hover .carousel__hover-overlay h2 {
+.carousel__item:hover .carousel__hover-overlay a {
+  opacity: 1;
+}
+
+.carousel-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.carousel-container button {
+  border: 0;
+  background: transparent;
+}
+.carousel-container button svg {
+  opacity: 0.75;
+  color: white;
+  height: 4rem;
+  transition: 0.5s;
+}
+
+.carousel-container button:hover svg,
+.carousel-container button:focus svg {
   opacity: 1;
 }
 
