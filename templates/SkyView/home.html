@@ -1,26 +1,32 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 {% load staticfiles %}
+
+{% load website_template_tags %}
+
 <head>
     <meta charset="utf-8"/>
     <title>SkyView</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
 </head>
 
 <body>
-
     <div id="navbar">
-        <div class="opacityBg"></div>
-        <a href="\"><div class="textBox button">Home</div></a>
-        <a href="\Planet\"><div class="textBox button">Planets</div></a>
-        <a href="\SignIn\"><div class="textBox button">Sign In</div></a>
-        <a href="\SignUp\"><div class="textBox button">Sign Up</div></a>
+        <ul>
+            <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
+            <li class="textBox button"><a href="">Feed</a></li>
+            <li class="textBox button"><a href="">Planets</a></li>
+            {% if user.is_authenticated %}
+            <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
+            <li class="textBox button"><a href="">Post</a></li>
+            {% else %}
+            <li class="textBox button"><a href="{% url 'website:signUp' %}">Sign Up</a></li>
+            <li class="textBox button"><a href="{% url 'website:login' %}">Login</a></li>
+            {% endif %}
+        </ul>
     </div>
 
-    <div id=" carousel">
-
-    </div>
+    {% planets_carousel %}
 
     <div class="content" id="feed">
         <div class="opacityBg"></div>
@@ -38,15 +44,8 @@
     </div>
 
     <div id="pictureBox">
-        <img id="nasaPicture" />
+        <img id="nasaPicture" alt="NASA Picture of the Day" />
     </div>
-	<script type="module">
-        const nasaImage = document.getElementById('nasaPicture')
-        fetch(
-          'https://api.nasa.gov/planetary/apod?api_key=PI5Fhlc0LjXWmwlekt1BpxTSfixkveFg8NQGI8FA'
-        )
-          .then((data) => data.json())
-          .then((data) => nasaImage.setAttribute('src', data.url))
-    </script>
+    <script type="module" src="{% static 'scripts/nasaPictureOfTheDay.js' %}"></script>
 </body>
 </html>

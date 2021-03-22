@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -10,15 +10,14 @@
 </head>
 
 <body>
-
     <div id="navbar">
         <ul>
             <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
-            <li class="textBox button"><a href="{% url 'website:feed' %}">Feed</a></li>
+            <li class="textBox button"><a href="">Feed</a></li>
             <li class="textBox button"><a href="">Planets</a></li>
             {% if user.is_authenticated %}
             <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
-            <li class="textBox button"><a href="">Create a Post</a></li>
+            <li class="textBox button"><a href="">Post</a></li>
             {% else %}
             <li class="textBox button"><a href="{% url 'website:signUp' %}">Sign Up</a></li>
             <li class="textBox button"><a href="{% url 'website:login' %}">Login</a></li>
@@ -28,23 +27,15 @@
         </ul>
     </div>
     <div>
-        {% if registered %}
-            <strong>Welcome to the team!</strong>
-        {% else %}
-            <strong>Join the community!</strong><br />
-            <form id="user_form" method="post" action="{% url 'website:signUp' %}"
-                enctype="multipart/form-data">
-
-            {% csrf_token %}
-
-            <!-- Display each form -->
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-
-            <!-- Provide a button to click to submit the form. -->
-            <input type="submit" name="submit" value="Sign Up" />
-            </form>
-        {% endif %}
+        <h1>Login to SkyView</h1>
+        <form id="login_form" method="post" action="{% url 'website:login' %}">
+        {% csrf_token %}
+        Username: <input type="text" name="username" value="" size="50" />
+        <br />
+        Password: <input type="password" name="password" value="" size="50" />
+        <br />
+        <input type="submit" value="submit" />
+        </form>
     </div>
 </body>
 </html>
