@@ -15,8 +15,26 @@
             <div class="post">
                 <h3 class="textBox">{{heading}}</h3>
                 <p class="textBox">{{body}} </p>
-                <!--if post has image-->
-                <img src="{{ image }}" style="display:inline-block" />
+                {% if user.is_authenticated %}
+                    <button 
+                        onClick="likePost({ 
+                            likeAPILocation: '{% url 'website:like_post' slug %}', 
+                            userId: {{ user.id }}, 
+                            csrfToken: '{{ csrf_token }}'
+                        })" 
+                        id="like-button"
+                    >
+                        {% if userLikedPost %}
+                            Unlike Post
+                        {% else %}
+                            Like Post
+                        {% endif %}
+                    </button>   
+                {% endif %}
+                
+                {% if image %}
+                    <img src="{{ image.url }}" style="display:inline-block" />
+                {% endif %}
             </div>
             <!--if comments exist: for all comments in-->
             {% for comment in comments %}
@@ -25,4 +43,5 @@
         </div>
     </div>
 </div>
+<script type="module" src="{% static 'scripts/likePost.js' %}"></script>
 {% endblock %}

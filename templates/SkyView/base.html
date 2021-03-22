@@ -24,21 +24,21 @@
       </li>
       {% if user.is_authenticated %}
       <li class="textBox button">
-        <a href="{% url 'website:logout' %}">Logout</a>
+        <a href="{% url 'website:create-post' %}">Create Post</a>
       </li>
       <li class="textBox button">
         <a href="{% url 'website:my profile' %}">Profile</a>
       </li>
       <li class="textBox button">
-        <a href="{% url 'website:create post' %}">Post</a>
+        <a href="{% url 'website:logout' %}">Logout</a>
       </li>
       {% else %}
-      <li class="textBox button">
-        <a href="{% url 'website:signUp' %}">Sign Up</a>
-      </li>
-      <li class="textBox button">
-        <a href="{% url 'website:login' %}">Login</a>
-      </li>
+        <li class="textBox button">
+          <a href="{% url 'website:signUp' %}">Sign Up</a>
+        </li>
+        <li class="textBox button">
+          <a href="{% url 'website:login' %}">Login</a>
+        </li>
       {% endif %}
     </nav>
 

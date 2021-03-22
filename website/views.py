@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.http.response import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
@@ -9,7 +10,7 @@ from urllib.parse import unquote
 from django.urls import reverse
 
 from website.forms import UserForm, UserProfileForm
-from website.models import Planet, Post, User, Reaction, Comment
+from website.models import Planet, Post, User, Reaction, Comment, UserProfile
 
 # post creation page
 @login_required
@@ -34,16 +35,20 @@ def home(request):
 
 
 # planet page
-def planet(request, planet_name_slug):
-    planetObject = Planet.objects.get(slug=planet_name_slug.lower())
+def planet(request, planet_name):
+    planetObject = Planet.objects.get(slug=planet_name.lower())
     return render(request, "SkyView/planet.html", context=planetObject.statistics)
 
 
 # single post page
-def post(request, post_name_slug):
-    post = Post.objects.get(slug=unquote(post_name_slug))
+def post(request, post_name):
+    post = Post.objects.get(slug=unquote(post_name))
     likes = Reaction.objects.filter(post=post, type="like")
     comments = Comment.objects.filter(post=post)
+
+    user = User.objects.get(id=request.user.id)
+    user_profile = UserProfile.objects.get(user=user)
+    user_reaction = Reaction.objects.filter(user=user_profile, post=post).first()
 
     postDict = {
         "planet": post.planet,
@@ -55,9 +60,29 @@ def post(request, post_name_slug):
         "timeCreated": post.time_created,
         "numberOfLikes": len(likes),
         "comments": comments,
+        "userLikedPost": user_reaction != None,
     }
 
     return render(request, "SkyView/post.html", context=postDict)
+
+
+@login_required
+def like_post(request, post_name):
+    post = Post.objects.get(slug=post_name)
+
+    user = User.objects.get(id=request.user.id)
+    user_profile = UserProfile.objects.get(user=user)
+    user_reaction = Reaction.objects.filter(user=user_profile, post=post).first()
+
+    if request.method == "POST":
+        if user_reaction:
+            user_reaction.delete()
+            return JsonResponse({"message": "Post Unliked", "buttonText": "Like Post"})
+        else:
+            Reaction.objects.create(post=post, user=user_profile, type="like")
+            return JsonResponse({"message": "Post Liked", "buttonText": "Unlike Post"})
+    else:
+        return HttpResponse("Invalid Method", 401)
 
 
 # profile page
@@ -132,7 +157,6 @@ def user_login(request):
                 return HttpResponse("Your account is disabled.")
 
         else:
-            print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied.")
 
     else:
