@@ -35,13 +35,7 @@
             <h3>You haven't created any posts yet</h3>
         {% else %} 
             {% for post in userPosts %}
-                <div class="item" style="position: relative">
-                <img class="pfp" src="{% static 'images/pfp.png' %}" />
-                <div class="post">
-                    <h3 class="textBox">{{post.title}}</h3>
-                    <p class="textBox">{{post.content}}</p>
-                </div>
-                </div>
+              {% feedItem post.slug %}
             {% endfor %}
         {% endif %}
       </div>
