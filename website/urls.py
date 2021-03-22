@@ -6,16 +6,16 @@ app_name = "website"
 urlpatterns = [
     path("", views.home, name="home"),
     path(
-        "Planet/", views.planet, name="planet"
+        "planet/", views.planet, name="planet"
     ),  # should ideally have name of specific planet
-    path("Feed/", views.feed, name="feed"),
+    path("feed/", views.feed, name="feed"),
     path(
-        "Feed/NewPost/", views.createPost, name="create-post"
+        "feed/new-post/", views.createPost, name="create-post"
     ),  # this should have the name of the specific planet
-    path("Post/<slug:post_name_slug>/", views.post, name="view-post"),
-    path("SignIn/MyProfile", views.profile, name="my profile"),
-    path("SignUp/", views.signUp, name="signUp"),
-    path("SignIn/", views.user_login, name="login"),
+    path("feed/<slug:post_name_slug>/", views.post, name="view-post"),
+    path("sign-in/my-profile", views.profile, name="my profile"),
+    path("sign-up/", views.signUp, name="signUp"),
+    path("sign-in/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
-    path("Planet/<slug:planet_name_slug>/", views.planet, name="planet"),
+    path("planet/<slug:planet_name_slug>/", views.planet, name="planet"),
 ]

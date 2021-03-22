@@ -23,19 +23,5 @@ from django.conf.urls import url
 from website import views
 
 urlpatterns = [
-    path("", views.home, name="home"),
-    path(
-        "Planet/", views.planet, name="planet"
-    ),  # should ideally have name of specific planet
-    path("Feed/", views.feed, name="feed"),
-    path(
-        "Feed/NewPost/", views.createPost, name="create post"
-    ),  # this should have the name of the specific planet
-    path("Post/<str:post_name>/", views.post, name="view post"),
-    path("SignIn/", views.user_login, name="login"),
-    path("SignIn/MyProfile", views.profile, name="my profile"),
-    path("SignUp/", views.signUp, name="sign up"),
-    path("admin/", admin.site.urls),
-    path("website/", include("website.urls")),
-    path("Planet/<slug:planet_name_slug>/", views.planet, name="planet"),
+    path("", include("website.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
