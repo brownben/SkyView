@@ -1,11 +1,5 @@
-{% extends 'SkyView/base.html' %} 
-{% load staticfiles %} 
-
-{% block title_block %}
-    Login 
-{% endblock %} 
-
-{% block body_block %}
+{% extends 'SkyView/base.html' %} {% load staticfiles %} {% block title_block %}
+Login {% endblock %} {% block body_block %}
 
 <div class="content">
   <div class="opacityBg"></div>
@@ -19,22 +13,18 @@
     action="{% url 'website:login' %}"
   >
     {% csrf_token %}
-    <p>
-      <label style="font-family: 'Comfortaa', cursive">Username</label>
-      <input class="formfield" type="text" name="username" value="" size="50" />
-      <br />
-    </p>
-    <p>
-      <label style="font-family: 'Comfortaa', cursive">Password</label>
-      <input
-        class="formfield"
-        type="password"
-        name="password"
-        value=""
-        size="50"
-      />
-      <br />
-    </p>
+
+    <label style="font-family: 'Comfortaa', cursive">Username</label>
+    <input class="formfield" type="text" name="username" value="" size="50" />
+
+    <label style="font-family: 'Comfortaa', cursive">Password</label>
+    <input
+      class="formfield"
+      type="password"
+      name="password"
+      value=""
+      size="50"
+    />
 
     <div style="margin-left: 40%; text-align: center; width: 20%">
       <input class="subm" type="submit" value="Login" />

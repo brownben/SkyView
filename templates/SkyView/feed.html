@@ -1,5 +1,7 @@
 {% extends 'SkyView/base.html' %} 
 {% load staticfiles %} 
+{% load website_template_tags %}
+
 {% block title_block %}
     Feed 
 {% endblock %} 
@@ -10,23 +12,8 @@
 
   <!-- for all discussions in-->
   <div class="textBox" style="margin-left: 3%">Feed</div>
-  <div class="feedBox">
-    <div class="item" style="position: relative">
-      <img class="pfp" src="{% static 'images/pfp.png' %}" />
-      <div class="post">
-        <h3 class="textBox">{post.title}</h3>
-        <p class="textBox">{post.content}</p>
-      </div>
-    </div>
-  </div>
-  <div class="feedBox">
-    <div class="item" style="position: relative">
-      <img class="pfp" src="{% static 'images/pfp.png' %}" />
-      <div class="post">
-        <h3 class="textBox">{post.title}</h3>
-        <p class="textBox">{post.content}</p>
-      </div>
-    </div>
-  </div>
+  {% for post in posts %}
+    {% feedItem post.slug %}
+  {% endfor %}
 </div>
 {% endblock %}

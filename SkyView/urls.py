@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
-from website import views
 from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.urls import url
+
+from website import views
 
 urlpatterns = [
     path("", views.home, name="home"),
@@ -30,12 +31,11 @@ urlpatterns = [
     path(
         "Feed/NewPost/", views.createPost, name="create post"
     ),  # this should have the name of the specific planet
-    path('Post/<str:post_name>/', views.post, name = 'view post'),
-    path('SignIn/', views.user_login, name='login'),
+    path("Post/<str:post_name>/", views.post, name="view post"),
+    path("SignIn/", views.user_login, name="login"),
     path("SignIn/MyProfile", views.profile, name="my profile"),
     path("SignUp/", views.signUp, name="sign up"),
     path("admin/", admin.site.urls),
     path("website/", include("website.urls")),
-    path('Planet/<slug:planet_name_slug>/', \
-        views.planet, name='planet'),
+    path("Planet/<slug:planet_name_slug>/", views.planet, name="planet"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

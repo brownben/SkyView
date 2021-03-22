@@ -1,14 +1,15 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from .forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
-from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from website.models import Planet, Post, User, Reaction, Comment
-from django.template.defaultfilters import slugify
+from django.http import HttpResponse
+from django.shortcuts import redirect
+from django.shortcuts import render
 from django.shortcuts import get_object_or_404
+from django.template.defaultfilters import slugify
 from urllib.parse import unquote
+from django.urls import reverse
+
+from website.forms import UserForm, UserProfileForm
+from website.models import Planet, Post, User, Reaction, Comment
 
 # post creation page
 @login_required
@@ -18,14 +19,17 @@ def createPost(request):
 
 # feed page
 def feed(request):
-    return render(request, "SkyView/feed.html")
+    context_dict = {"posts": Post.objects.order_by("time_created")}
+    return render(request, "SkyView/feed.html", context=context_dict)
 
 
 # home page
 def home(request):
-    contextDict = {}
-    contextDict["recentPosts"] = Post.objects.order_by("time_created")[:5]
-    contextDict["isLoggedIn"] = request.user.is_authenticated
+    contextDict = {
+        "recentPosts": Post.objects.order_by("time_created")[:5],
+        "isLoggedIn": request.user.is_authenticated,
+    }
+
     return render(request, "SkyView/home.html", context=contextDict)
 
 
@@ -36,8 +40,8 @@ def planet(request, planet_name_slug):
 
 
 # single post page
-def post(request, post_name):
-    post = Post.objects.get(slug=unquote(post_name))
+def post(request, post_name_slug):
+    post = Post.objects.get(slug=unquote(post_name_slug))
     likes = Reaction.objects.filter(post=post, type="like")
     comments = Comment.objects.filter(post=post)
 
@@ -48,7 +52,7 @@ def post(request, post_name):
         "image": post.image,
         "body": post.body,
         "slug": post.slug,
-        "time created": post.time_created,
+        "timeCreated": post.time_created,
         "numberOfLikes": len(likes),
         "comments": comments,
     }
@@ -134,11 +138,6 @@ def user_login(request):
     else:
         # No context variables to pass to the template system
         return render(request, "SkyView/login.html")
-
-
-@login_required
-def restricted(request):
-    return HttpResponse("Since you're logged in, you can see this text!")
 
 
 @login_required
