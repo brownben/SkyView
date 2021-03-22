@@ -1,25 +1,44 @@
-{% extends 'SkyView/base.html' %}
-{% load staticfiles %}
+{% extends 'SkyView/base.html' %} 
+{% load staticfiles %} 
 
 {% block title_block %}
-    Login
-{% endblock %}
+    Login 
+{% endblock %} 
 
 {% block body_block %}
-    <div class="content">
-        <div class="opacityBg"></div>
-        <div class="textBox" style="margin-left:25%; text-align:center; width:50%;"><strong>Login to SkyView</strong></div>
-            <form class="formplace" id="login_form" method="post" action="{% url 'website:login' %}">
-                {% csrf_token %}
-                <p>
-                <label style="font-family: 'Comfortaa', cursive;">Username</label>
-                <input class="formfield" type="text" name="username" value="" size="50" />
-                <br /></p>
-                <p>
-                <label style="font-family: 'Comfortaa', cursive;">Password</label>
-                <input class="formfield" type="password" name="password" value="" size="50" />
-                <br /></p>
-            
-                <div style="margin-left:40%; text-align:center; width:20%;"><input class="subm" type="submit" value="Login" /></div>
-            </form>
+
+<div class="content">
+  <div class="opacityBg"></div>
+  <div class="textBox" style="margin-left: 25%; text-align: center; width: 50%">
+    <strong>Login to SkyView</strong>
+  </div>
+  <form
+    class="formplace"
+    id="login_form"
+    method="post"
+    action="{% url 'website:login' %}"
+  >
+    {% csrf_token %}
+    <p>
+      <label style="font-family: 'Comfortaa', cursive">Username</label>
+      <input class="formfield" type="text" name="username" value="" size="50" />
+      <br />
+    </p>
+    <p>
+      <label style="font-family: 'Comfortaa', cursive">Password</label>
+      <input
+        class="formfield"
+        type="password"
+        name="password"
+        value=""
+        size="50"
+      />
+      <br />
+    </p>
+
+    <div style="margin-left: 40%; text-align: center; width: 20%">
+      <input class="subm" type="submit" value="Login" />
+    </div>
+  </form>
+</div>
 {% endblock %}

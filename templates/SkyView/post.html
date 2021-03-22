@@ -1,40 +1,25 @@
-<!DOCTYPE html>
+{% extends 'SkyView/base.html' %} 
+{% load staticfiles %} 
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-{% load staticfiles %}
-<head>
-    <meta charset="utf-8" />
-    <title>SkyView</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
+{% block title_block %}
+    {{ heading }}
+{% endblock %} 
 
-<body>
-
-    <div id="navbar">
-        <div class="opacityBg"></div>
-        <a href=""><div class="textBox button">Home</div></a>
-        <a href=""><div class="textBox button">Planets</div></a>
-        <a href=""><div class="textBox button">Sign In</div></a>
-        <a href=""><div class="textBox button">Sign Up</div></a>
-    </div>
-
-    <div class="content" id="feed">
-        <div class="opacityBg"></div>
-        <div class="feedBox">
-            <div class="item" style="position:relative">
-                <img class="pfp" src="{% static 'images/pfp.png' %}" />
-                <div class="post">
-                    <h3 class="textBox">{{heading}}</h3>
-                    <p class="textBox">{{body}} </p>
-                    <!--if post has image-->
-                    <img src="{{image}}" style="display:inline-block" />
-                </div>
-                <!--if comments exist: for all comments in-->
-
+{% block body_block %}
+<div class="content" id="feed">
+    <div class="opacityBg"></div>
+    <div class="feedBox">
+        <div class="item" style="position:relative">
+            <img class="pfp" src="{% static 'images/pfp.png' %}" />
+            <div class="post">
+                <h3 class="textBox">{{heading}}</h3>
+                <p class="textBox">{{body}} </p>
+                <!--if post has image-->
+                <img src="{{ image }}" style="display:inline-block" />
             </div>
+            <!--if comments exist: for all comments in-->
+
         </div>
     </div>
-
-</body>
-
-</html>
+</div>
+{% endblock %}

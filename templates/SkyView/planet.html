@@ -1,86 +1,62 @@
-<!DOCTYPE html>
+{% extends 'SkyView/base.html' %} 
+{% load staticfiles %} 
+{% block title_block %}
+    {{ planet.name }} 
+{% endblock %} 
 
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-{% load staticfiles %}
-
-<head>
-    <meta charset="utf-8" />
-    <title>SkyView</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-
-<body>
-    <div id="navbar">
-        <div class="opacityBg"></div>
-        <ul style="margin:auto;">
-            <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
-            <li class="textBox button"><a href="{% url 'website:feed' %}">Feed</a></li>
-            <li class="textBox button"><a href="{% url 'website:planet' %}">Planets</a></li>
-            {% if user.is_authenticated %}
-            <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
-            <li class="textBox button"><a href="">Post</a></li>
-            {% else %}
-            <li class="textBox button"><a href="{% url 'website:signUp' %}">Sign Up</a></li>
-            <li class="textBox button"><a href="{% url 'website:login' %}">Login</a></li>
-            {% endif %}
-        </ul>
-    </div>
-    <div id="planetImg" src="{{ planet.image }}"></div>
-    <div class="content">
-        <div class="opacityBg"></div>
-        <table>
-            <tr>
-                <th>Mass</th>
-                <td>{{mass}}</td>
-            </tr>
-            <tr>
-                <th>Diameter</th>
-                <td>{{diameter}}</td>
-            </tr>
-            <tr>
-                <th>Volume</th>
-                <td>{{volume}}</td>
-            </tr>
-            <tr>
-                <th>Gravity</th>
-                <td>{{gravity}}</td>
-            </tr>
-            <tr>
-                <th>Temperature</th>
-                <td>{{averageTemperature}}</td>
-            </tr>
-            <tr>
-                <th>Moons</th>
-                <td>{{numberOfMoons}}</td>
-            </tr>
-            <tr>
-                <th>Average Distance from Sun</th>
-                <td>{{averageDistanceFromSun}}</td>
-            </tr>
-            <tr>
-                <th>Length of One Day</th>
-                <td>{{lengthOfDay}}</td>
-            </tr>
-            <tr>
-                <th>Length of One Year</th>
-                <td>{{lengthOfYear}}</td>
-            </tr>
-            <tr>
-                <th>Atmosphere</th>
-                <td>{{contentsOfAtmosphere}}</td>
-            </tr>
-            <tr>
-                <th>Water</th>
-                <td>{{water}}</td>
-            </tr>
-            <tr>
-                <th>Specialties</th>
-                <td>{{specialties}}</td>
-            </tr>
-        </table>
-    </div>
-
-</body>
-
-</html>
+{% block body_block %}
+<div id="planetImg" src="{{ planet.image }}"></div>
+<div class="content">
+  <div class="opacityBg"></div>
+  <table>
+    <tr>
+      <th>Mass</th>
+      <td>{{mass}}</td>
+    </tr>
+    <tr>
+      <th>Diameter</th>
+      <td>{{diameter}}</td>
+    </tr>
+    <tr>
+      <th>Volume</th>
+      <td>{{volume}}</td>
+    </tr>
+    <tr>
+      <th>Gravity</th>
+      <td>{{gravity}}</td>
+    </tr>
+    <tr>
+      <th>Temperature</th>
+      <td>{{averageTemperature}}</td>
+    </tr>
+    <tr>
+      <th>Moons</th>
+      <td>{{numberOfMoons}}</td>
+    </tr>
+    <tr>
+      <th>Average Distance from Sun</th>
+      <td>{{averageDistanceFromSun}}</td>
+    </tr>
+    <tr>
+      <th>Length of One Day</th>
+      <td>{{lengthOfDay}}</td>
+    </tr>
+    <tr>
+      <th>Length of One Year</th>
+      <td>{{lengthOfYear}}</td>
+    </tr>
+    <tr>
+      <th>Atmosphere</th>
+      <td>{{contentsOfAtmosphere}}</td>
+    </tr>
+    <tr>
+      <th>Water</th>
+      <td>{{water}}</td>
+    </tr>
+    <tr>
+      <th>Specialties</th>
+      <td>{{specialties}}</td>
+    </tr>
+  </table>
+</div>
+{% endblock %}

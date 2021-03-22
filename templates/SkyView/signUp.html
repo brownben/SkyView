@@ -1,25 +1,30 @@
-{% extends 'SkyView/base.html' %}
-{% load staticfiles %}
-
+{% extends 'SkyView/base.html' %} 
+{% load staticfiles %} 
 {% block body_block %}
-    <div class="content">
-        <div class="opacityBg"></div>
-            {% if registered %}
-            <div class="titleBox"><strong>Welcome to the team!</strong></div>
-            {% else %}
-            <div class="titleBox"><strong>Join the community!</strong></div>
-            <form class = "formplace" id="user_form" method="post" action="{% url 'website:signUp' %}"
-                enctype="multipart/form-data">
 
-            {% csrf_token %}
+<div class="content">
+  <div class="opacityBg"></div>
+  {% if registered %}
+  <div class="titleBox"><strong>Welcome to the team!</strong></div>
+  {% else %}
+  <div class="titleBox"><strong>Join the community!</strong></div>
+  <form
+    class="formplace"
+    id="user_form"
+    method="post"
+    action="{% url 'website:signUp' %}"
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %}
 
-            <!-- Display each form -->
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-        
-            <!-- Provide a button to click to submit the form. -->
-            <div style="margin-left:40%; text-align:center; width:20%;"><input class="subm" type="submit" name="submit" value="Sign Up" /></div>
-        </form>   
-        {% endif %}
+    <!-- Display each form -->
+    {{ user_form.as_p }} {{ profile_form.as_p }}
+
+    <!-- Provide a button to click to submit the form. -->
+    <div style="margin-left: 40%; text-align: center; width: 20%">
+      <input class="subm" type="submit" name="submit" value="Sign Up" />
     </div>
+  </form>
+  {% endif %}
+</div>
 {% endblock %}

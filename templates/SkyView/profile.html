@@ -1,53 +1,51 @@
-{% extends 'SkyView/base.html' %}
-{% load staticfiles %}
-
+{% extends 'SkyView/base.html' %} 
+{% load staticfiles %} 
 {% block title_block %}
-    SkyView: Profile
-{% endblock %}
-
+    {{ user.username }} 
+{% endblock %} 
 
 {% block body_block %}
+<div class="content">
+  <div class="opacityBg"></div>
+  <div class="textBox" style="margin-left: 25%; text-align: center; width: 50%">
+    Your Posts and Comments
+  </div>
 
-    <div class="content">
-        <div class="opacityBg"></div>
-        <div class="textBox" style="margin-left:25%; text-align:center; width:50%;">Your Posts and Comments</div>
-        
-            {% if user.picture %}
-                {{ user.picture }} 
-            {% else %}
-                <div><img class="pfpic" src="{% static 'images/pfp.png' %}" /></div>
-            {% endif %}
-            
+  {% if user.picture %} 
+    {{ user.picture }} 
+  {% else %}
+    <div>
+        <img class="pfpic" src="{% static 'images/pfp.png' %}" />
+    </div>
+  {% endif %}
 
-            <div class='titleBox'>{{ user.username }} </div>
-            <div class='titleBox'>{{ user.email }}</div>
-            {% if user.website %}
-                <div class='titleBox'> {{ user.website }} </div>
-            {% endif %}
-            <!--if user has posts, 
-            for all of them display feed box-->
-                <div class="content" id="feed">
-                    <div class="formplace">
-                    <!-- for all discussions in-->
-                    <div class="textBox" style="margin-left:3%;">My Posts</div>
-                    <div class="feedBox">
-                        {% if not userPosts %}
-                            <h3>You haven't created any posts yet</h3>
-                        {% else %}
-                            {% for post in userPosts %}
-                                <div class="item" style="position:relative">
-                                    <img class="pfp" src="{% static 'images/pfp.png' %}" />
-                                    <div class="post">
-                                        <h3 class="textBox">{{post.title}}</h3>
-                                        <p class="textBox">{{post.content}}</p>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                    </div>            
+  <div class="titleBox">{{ user.username }}</div>
+  <div class="titleBox">{{ user.email }}</div>
+  {% if user.website %}
+    <div class="titleBox">{{ user.website }}</div>
+  {% endif %}
+  <!--if user has posts,
+        for all of them display feed box-->
+  <div class="content" id="feed">
+    <div class="formplace">
+      <!-- for all discussions in-->
+      <div class="textBox" style="margin-left: 3%">My Posts</div>
+      <div class="feedBox">
+        {% if not userPosts %}
+            <h3>You haven't created any posts yet</h3>
+        {% else %} 
+            {% for post in userPosts %}
+                <div class="item" style="position: relative">
+                <img class="pfp" src="{% static 'images/pfp.png' %}" />
+                <div class="post">
+                    <h3 class="textBox">{{post.title}}</h3>
+                    <p class="textBox">{{post.content}}</p>
                 </div>
-            
+                </div>
+            {% endfor %}
+        {% endif %}
+      </div>
     </div>
-    </div>
-
+  </div>
+</div>
 {% endblock %}
