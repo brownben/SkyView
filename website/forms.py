@@ -1,7 +1,8 @@
-from django.contrib.auth.models import User
-from .models import Post, UserProfile
 from django import forms
-from django.forms import ModelForm, Textarea, TextInput, EmailInput, URLInput, FileInput
+from django.contrib.auth.models import User
+from django.forms import TextInput, EmailInput, URLInput, FileInput
+
+from .models import Comment, Post, UserProfile
 
 
 class UserForm(forms.ModelForm):
@@ -54,3 +55,13 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         exclude = ("creator", "time_created", "slug")
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        exclude = (
+            "post",
+            "user",
+            "time_created",
+        )

@@ -1,0 +1,25 @@
+{% extends 'SkyView/base.html' %} 
+{% load staticfiles %} 
+
+{% block title_block %}
+    Comment on {{ post.name }}
+{% endblock %} 
+
+{% block body_block %}
+<div class="content">
+  <div class="opacityBg"></div>
+  <div class="textBox">Comment on {{ post.name }}</div>
+  <form method="post" action="{% url 'website:create_comment' post.slug %}">
+    {% csrf_token %} 
+    {% for hidden in form.hidden_fields %} 
+        {{ hidden }} 
+    {%endfor %} 
+    {% for field in form.visible_fields %} 
+        {{ field.errors }} 
+        {{ field.help_text }} 
+        {{ field }} 
+    {% endfor %}
+    <input type="submit" name="submit" value="Comment" />
+  </form>
+</div>
+{% endblock %}

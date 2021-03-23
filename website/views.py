@@ -2,14 +2,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.http.response import JsonResponse
-from django.shortcuts import redirect
-from django.shortcuts import render
-from django.shortcuts import get_object_or_404
-from django.template.defaultfilters import slugify
-from urllib.parse import unquote
+from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from website.forms import PostForm, UserForm, UserProfileForm
+from website.forms import CommentForm, PostForm, UserForm, UserProfileForm
 from website.models import Planet, Post, User, Reaction, Comment, UserProfile
 
 # post creation page
@@ -30,6 +26,44 @@ def createPost(request):
             return redirect("/feed")
     else:
         return render(request, "SkyView/createPost.html", {"form": form})
+
+
+@login_required
+def create_comment(request, post_slug):
+    try:
+        post = Post.objects.get(slug=post_slug)
+    except Post.DoesNotExist:
+        post = None
+
+    if post is None:
+        return redirect("/")
+
+    user = User.objects.get(id=request.user.id)
+    user_profile = UserProfile.objects.get(user=user)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            if post:
+                comment = form.save(commit=False)
+
+                comment.post = post
+                comment.user = user_profile
+
+                comment.save()
+
+                return redirect(
+                    reverse(
+                        "website:view-post",
+                        kwargs={"post_slug": post_slug},
+                    )
+                )
+
+    form = CommentForm()
+    context_dict = {"form": form, "post": post}
+
+    return render(request, "SkyView/createComment.html", context=context_dict)
 
 
 # feed page
@@ -69,8 +103,8 @@ def planet(request, planet_name):
 
 
 # single post page
-def post(request, post_name):
-    post = Post.objects.get(slug=unquote(post_name))
+def post(request, post_slug):
+    post = Post.objects.get(slug=post_slug)
     likes = Reaction.objects.filter(post=post, type="like")
     comments = Comment.objects.filter(post=post)
 
@@ -95,8 +129,8 @@ def post(request, post_name):
 
 
 @login_required
-def like_post(request, post_name):
-    post = Post.objects.get(slug=post_name)
+def like_post(request, post_slug):
+    post = Post.objects.get(slug=post_slug)
 
     user = User.objects.get(id=request.user.id)
     user_profile = UserProfile.objects.get(user=user)

@@ -40,6 +40,8 @@
             {% for comment in comments %}
                 {% comment comment.id %}
             {% endfor %} 
+
+            <a href="{% url 'website:create_comment' slug %}">Add Comment</a>
         </div>
     </div>
 </div>
