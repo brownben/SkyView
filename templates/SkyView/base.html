@@ -1,36 +1,47 @@
-<!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 {% load staticfiles %}
 
-<head>
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
     <meta charset="utf-8" />
-    {% block title_block %}
-        SkyView
-    {% endblock %}
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
+    <title>{% block title_block %} {% endblock %} - SkyView</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}" />
+  </head>
 
-<body>
-    <div id="navbar">
-        <div class="opacityBg"></div>
-            <li class="textBox button"><a href="{% url 'website:home' %}">Home</a></li>
-            <li class="textBox button"><a href="{% url 'website:feed' %}">Feed</a></li>
-            <li class="textBox button"><a href="{% url 'website:planet' %}">Planets</a></li>
-            {% if user.is_authenticated %}
-            <li class="textBox button"><a href="{% url 'website:logout' %}">Logout</a></li>
-            <li class="textBox button"><a href="{% url 'website:my profile' %}">Profile</a></li>
-            <li class="textBox button"><a href="{% url 'website:create post' %}">Post</a></li>
-            {% else %}
-            <li class="textBox button"><a href="{% url 'website:signUp' %}">Sign Up</a></li>
-            <li class="textBox button"><a href="{% url 'website:login' %}">Login</a></li>
-            {% endif %}
-    </div>
+  <body>
+    <nav id="navbar">
+      <div class="opacityBg"></div>
+      <li class="textBox button">
+        <a href="{% url 'website:home' %}">Home</a>
+      </li>
+      <li class="textBox button">
+        <a href="{% url 'website:feed' %}">Feed</a>
+      </li>
+      <li class="textBox button">
+        <a href="{% url 'website:planets' %}">Planets</a>
+      </li>
+      {% if user.is_authenticated %}
+      <li class="textBox button">
+        <a href="{% url 'website:create_post' %}">Create Post</a>
+      </li>
+      <li class="textBox button">
+        <a href="{% url 'website:user_profile' %}">Profile</a>
+      </li>
+      <li class="textBox button">
+        <a href="{% url 'website:logout' %}">Logout</a>
+      </li>
+      {% else %}
+      <li class="textBox button">
+        <a href="{% url 'website:signUp' %}">Sign Up</a>
+      </li>
+      <li class="textBox button">
+        <a href="{% url 'website:login' %}">Login</a>
+      </li>
+      {% endif %}
+    </nav>
 
-    
-{% block body_block %}
-{% endblock %}
-</body>
-
+    <main>{% block body_block %} {% endblock %}</main>
+  </body>
 </html>

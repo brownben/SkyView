@@ -39,7 +39,11 @@ class Planet(models.Model):
             return json.loads(self.data)
         else:
             return self.data
+<<<<<<< HEAD
                         
+=======
+
+>>>>>>> 43d545aabdedfc51de9ff79b056e5fd31da2bba4
 
 class Post(models.Model):
     planet = models.ForeignKey(Planet, on_delete=models.CASCADE)
@@ -77,4 +81,8 @@ class Comment(models.Model):
     body = models.TextField()
 
     def __str__(self):
+<<<<<<< HEAD
         return str(self.id)
+=======
+        return str(self.id)
+>>>>>>> 43d545aabdedfc51de9ff79b056e5fd31da2bba4

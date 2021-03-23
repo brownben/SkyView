@@ -1,20 +1,24 @@
+/* Reset Browser Quirks */
+@import url('https://unpkg.com/modern-normalize@1.0.0/modern-normalize.css');
+
+/* Import Font */
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
 
 
 /*constant attribute */
 
 body {
-    background-image: url("images/stars.png");
+    background-image: url("../images/stars.png");
     background-color: black;
     background-repeat:repeat;
     background-size:50%;
+    font-family: Comfortaa, system-ui, sans-serif;
 }
 
 
 #navbar {
     position: relative;
     width: 70%;
-    margin: auto;
     padding: 5px;
     display: flex;
     justify-content: space-between;
@@ -66,7 +70,6 @@ a:active{
     padding: 5px;
     background-color: #E8E8E8;
     border-radius: 10px;
-    font-family: 'Comfortaa', cursive;
 }
 
 .content {
@@ -120,7 +123,6 @@ img#nasaPicture {
 
 table {
     margin: auto;
-    font-family: 'Comfortaa', cursive;
     padding: 10px;
     border: 1px solid black;
 }
@@ -154,7 +156,7 @@ td {
 .post h3{
     position:relative;
     width:100%;
-    margin:0px;
+    margin: 0;
     margin-top:5px;
     padding:5px;
 }
@@ -163,7 +165,7 @@ td {
     position:relative;
     display:inline-block;
     width: auto;
-    margin: 0px;
+    margin: 0;
     padding: 5px;
 }
 
@@ -174,12 +176,10 @@ td {
     display: inline-block;
     margin-top: 5px;
     margin-bottom: 5px;
-    margin-left: 10px;
     margin-right: 10px;
     padding: 5px;
     background-color: #E8E8E8;
     border-radius: 10px;
-    font-family: 'Comfortaa', cursive;
     margin-left:25%; text-align:center; width:50%;
 }
 
@@ -193,7 +193,6 @@ td {
     padding: 5px;
     background-color: #E8E8E8;
     border-radius: 10px;
-    font-family: 'Comfortaa', cursive;
     border-color: #E8E8E8;
     color: black;
     text-align: center;
