@@ -1,0 +1,19 @@
+{% extends 'SkyView/base.html' %} 
+{% load staticfiles %} 
+{% load website_template_tags %} 
+
+{% block title_block %} 
+  The Planets 
+{% endblock %} 
+{% block body_block %} 
+
+{% for planet in planets %}
+  <div class="content">
+    <a href="{% url 'website:planet' planet.slug %}">
+      <h2>{{ planet.name }}</h2>
+      <img src="{{ planet.image.url }}" />
+    </a>
+  </div>
+{% endfor %} 
+
+{% endblock %}

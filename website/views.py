@@ -48,6 +48,12 @@ def home(request):
     return render(request, "SkyView/home.html", context=contextDict)
 
 
+def planets(request):
+    contextDict = {"planets": Planet.objects.all()}
+
+    return render(request, "SkyView/planets.html", context=contextDict)
+
+
 # planet page
 def planet(request, planet_name):
     planetObject = Planet.objects.get(slug=planet_name)
