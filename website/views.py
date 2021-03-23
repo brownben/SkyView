@@ -146,10 +146,12 @@ def create_comment(request, post_slug):
 @login_required
 def user_profile(request):
     try:
-        userPosts = Post.objects.get(creator_id=request.user.id)
+        userPosts = Post.objects.filter(creator_id=request.user.id)
     except Post.DoesNotExist:
         userPosts = None
-    return render(request, "SkyView/profile.html", userPosts)
+
+    context_dict = {"userPosts": userPosts}
+    return render(request, "SkyView/profile.html", context=context_dict)
 
 
 def sign_up(request):
