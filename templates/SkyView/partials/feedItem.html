@@ -7,7 +7,7 @@
       src="{% static 'images/pfp.png' %}"
       alt="{{ post.user.username }}'s Profile Image"
     />
-    <a href="{% url 'website:view-post' post.slug %}">
+    <a href="{% url 'website:view_post' post.slug %}">
       <div class="post">
         <h3 class="textBox">{{ post.heading }}</h3>
         <p class="textBox">{{ post.body }}</p>

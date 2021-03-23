@@ -8,9 +8,86 @@ from django.urls import reverse
 from website.forms import CommentForm, PostForm, UserForm, UserProfileForm
 from website.models import Planet, Post, User, Reaction, Comment, UserProfile
 
-# post creation page
+
+def home(request):
+    context_dict = {
+        "recentPosts": Post.objects.order_by("time_created")[:5],
+        "isLoggedIn": request.user.is_authenticated,
+    }
+
+    return render(request, "SkyView/home.html", context=context_dict)
+
+
+def planets(request):
+    context_dict = {"planets": Planet.objects.all()}
+
+    return render(request, "SkyView/planets.html", context=context_dict)
+
+
+def planet(request, planet_name):
+    planetObject = Planet.objects.get(slug=planet_name)
+    posts = Post.objects.filter(planet=planetObject)
+
+    contextDict = {
+        "planet": planetObject,
+        "statistics": planetObject.statistics,
+        "posts": posts,
+    }
+
+    return render(request, "SkyView/planet.html", context=contextDict)
+
+
+def feed(request):
+    context_dict = {"posts": Post.objects.order_by("-time_created")}
+    return render(request, "SkyView/feed.html", context=context_dict)
+
+
+def post(request, post_slug):
+    post = Post.objects.get(slug=post_slug)
+    likes = Reaction.objects.filter(post=post, type="like")
+    comments = Comment.objects.filter(post=post)
+
+    user = User.objects.get(id=request.user.id)
+    user_profile = UserProfile.objects.get(user=user)
+    user_reaction = Reaction.objects.filter(user=user_profile, post=post).first()
+
+    context_dict = {
+        "planet": post.planet,
+        "heading": post.heading,
+        "creator": post.creator,
+        "image": post.image,
+        "body": post.body,
+        "slug": post.slug,
+        "timeCreated": post.time_created,
+        "numberOfLikes": len(likes),
+        "comments": comments,
+        "userLikedPost": user_reaction != None,
+    }
+
+    return render(request, "SkyView/post.html", context=context_dict)
+
+
 @login_required
-def createPost(request):
+def like_post(request, post_slug):
+    post = Post.objects.get(slug=post_slug)
+
+    user = User.objects.get(id=request.user.id)
+    user_profile = UserProfile.objects.get(user=user)
+    user_reaction = Reaction.objects.filter(user=user_profile, post=post).first()
+
+    if request.method == "POST":
+        if user_reaction:
+            user_reaction.delete()
+            return JsonResponse({"message": "Post Unliked", "buttonText": "Like Post"})
+        else:
+            Reaction.objects.create(post=post, user=user_profile, type="like")
+            return JsonResponse({"message": "Post Liked", "buttonText": "Unlike Post"})
+    else:
+        return HttpResponse("Invalid Method", 401)
+
+
+@login_required
+def create_post(request):
     form = PostForm()
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -55,7 +132,7 @@ def create_comment(request, post_slug):
 
                 return redirect(
                     reverse(
-                        "website:view-post",
+                        "website:view_post",
                         kwargs={"post_slug": post_slug},
                     )
                 )
@@ -66,90 +143,8 @@ def create_comment(request, post_slug):
     return render(request, "SkyView/createComment.html", context=context_dict)
 
 
-# feed page
-def feed(request):
-    context_dict = {"posts": Post.objects.order_by("-time_created")}
-    return render(request, "SkyView/feed.html", context=context_dict)
-
-
-# home page
-def home(request):
-    contextDict = {
-        "recentPosts": Post.objects.order_by("time_created")[:5],
-        "isLoggedIn": request.user.is_authenticated,
-    }
-
-    return render(request, "SkyView/home.html", context=contextDict)
-
-
-def planets(request):
-    contextDict = {"planets": Planet.objects.all()}
-
-    return render(request, "SkyView/planets.html", context=contextDict)
-
-
-# planet page
-def planet(request, planet_name):
-    planetObject = Planet.objects.get(slug=planet_name)
-    posts = Post.objects.filter(planet=planetObject)
-
-    contextDict = {
-        "planet": planetObject,
-        "statistics": planetObject.statistics,
-        "posts": posts,
-    }
-
-    return render(request, "SkyView/planet.html", context=contextDict)
-
-
-# single post page
-def post(request, post_slug):
-    post = Post.objects.get(slug=post_slug)
-    likes = Reaction.objects.filter(post=post, type="like")
-    comments = Comment.objects.filter(post=post)
-
-    user = User.objects.get(id=request.user.id)
-    user_profile = UserProfile.objects.get(user=user)
-    user_reaction = Reaction.objects.filter(user=user_profile, post=post).first()
-
-    postDict = {
-        "planet": post.planet,
-        "heading": post.heading,
-        "creator": post.creator,
-        "image": post.image,
-        "body": post.body,
-        "slug": post.slug,
-        "timeCreated": post.time_created,
-        "numberOfLikes": len(likes),
-        "comments": comments,
-        "userLikedPost": user_reaction != None,
-    }
-
-    return render(request, "SkyView/post.html", context=postDict)
-
-
 @login_required
-def like_post(request, post_slug):
-    post = Post.objects.get(slug=post_slug)
-
-    user = User.objects.get(id=request.user.id)
-    user_profile = UserProfile.objects.get(user=user)
-    user_reaction = Reaction.objects.filter(user=user_profile, post=post).first()
-
-    if request.method == "POST":
-        if user_reaction:
-            user_reaction.delete()
-            return JsonResponse({"message": "Post Unliked", "buttonText": "Like Post"})
-        else:
-            Reaction.objects.create(post=post, user=user_profile, type="like")
-            return JsonResponse({"message": "Post Liked", "buttonText": "Unlike Post"})
-    else:
-        return HttpResponse("Invalid Method", 401)
-
-
-# profile page
-@login_required
-def profile(request):
+def user_profile(request):
     try:
         userPosts = Post.objects.get(creator_id=request.user.id)
     except Post.DoesNotExist:
@@ -157,8 +152,7 @@ def profile(request):
     return render(request, "SkyView/profile.html", userPosts)
 
 
-# authentication page
-def signUp(request):
+def sign_up(request):
     # A boolean value for telling the template
     # whether the registration was successful.
     registered = False

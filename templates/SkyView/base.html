@@ -24,26 +24,24 @@
       </li>
       {% if user.is_authenticated %}
       <li class="textBox button">
-        <a href="{% url 'website:create-post' %}">Create Post</a>
+        <a href="{% url 'website:create_post' %}">Create Post</a>
       </li>
       <li class="textBox button">
-        <a href="{% url 'website:my profile' %}">Profile</a>
+        <a href="{% url 'website:user_profile' %}">Profile</a>
       </li>
       <li class="textBox button">
         <a href="{% url 'website:logout' %}">Logout</a>
       </li>
       {% else %}
-        <li class="textBox button">
-          <a href="{% url 'website:signUp' %}">Sign Up</a>
-        </li>
-        <li class="textBox button">
-          <a href="{% url 'website:login' %}">Login</a>
-        </li>
+      <li class="textBox button">
+        <a href="{% url 'website:signUp' %}">Sign Up</a>
+      </li>
+      <li class="textBox button">
+        <a href="{% url 'website:login' %}">Login</a>
+      </li>
       {% endif %}
     </nav>
 
-    <main>
-      {% block body_block %} {% endblock %}
-    </main>
+    <main>{% block body_block %} {% endblock %}</main>
   </body>
 </html>

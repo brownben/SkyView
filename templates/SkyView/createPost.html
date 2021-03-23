@@ -9,7 +9,7 @@
 <div class="content">
   <div class="opacityBg"></div>
   <div class="textBox">Create a Post</div>
-  <form method="post" action="{% url 'website:create-post' %}">
+  <form method="post" action="{% url 'website:create_post' %}">
     {% csrf_token %} 
     {% for hidden in form.hidden_fields %} 
         {{ hidden }} 
