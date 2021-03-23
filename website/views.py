@@ -9,13 +9,27 @@ from django.template.defaultfilters import slugify
 from urllib.parse import unquote
 from django.urls import reverse
 
-from website.forms import UserForm, UserProfileForm
+from website.forms import PostForm, UserForm, UserProfileForm
 from website.models import Planet, Post, User, Reaction, Comment, UserProfile
 
 # post creation page
 @login_required
 def createPost(request):
-    return render(request, "SkyView/createPost.html")
+    form = PostForm()
+    if request.method == "POST":
+        form = PostForm(request.POST)
+
+        if form.is_valid():
+            post = form.save(commit=False)
+
+            user = User.objects.get(id=request.user.id)
+            user_profile = UserProfile.objects.get(user=user)
+            post.creator = user_profile
+
+            post.save()
+            return redirect("/feed")
+    else:
+        return render(request, "SkyView/createPost.html", {"form": form})
 
 
 # feed page

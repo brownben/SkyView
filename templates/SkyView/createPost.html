@@ -2,22 +2,24 @@
 {% load staticfiles %} 
 
 {% block title_block %}
-    Create Post
+    Create Post 
 {% endblock %} 
 
 {% block body_block %}
-    <div class="content">
-    <div class="opacityBg"></div>
-        <div class="textBox">Create a Post</div>
-        <form>
-            <div class="textBox">Heading:</div>
-            <input type="text" id="heading" name="heading" /><br />
-            <label class="textBox">Body:</label>
-            <br />
-            <textarea style="margin-left:11px" id="body" name="body" rows="4" cols="70">
-            </textarea>
-            <input type="file" id="img" name="img" accept="image/*" style="margin-left:11px">
-            <input type="submit" value="Submit">
-        </form>
-    </div>
+<div class="content">
+  <div class="opacityBg"></div>
+  <div class="textBox">Create a Post</div>
+  <form method="post" action="{% url 'website:create-post' %}">
+    {% csrf_token %} 
+    {% for hidden in form.hidden_fields %} 
+        {{ hidden }} 
+    {%endfor %} 
+    {% for field in form.visible_fields %} 
+        {{ field.errors }} 
+        {{ field.help_text }} 
+        {{ field }} 
+    {% endfor %}
+    <input type="submit" name="submit" value="Create Post" />
+  </form>
+</div>
 {% endblock %}
