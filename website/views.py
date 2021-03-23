@@ -34,7 +34,7 @@ def createPost(request):
 
 # feed page
 def feed(request):
-    context_dict = {"posts": Post.objects.order_by("time_created")}
+    context_dict = {"posts": Post.objects.order_by("-time_created")}
     return render(request, "SkyView/feed.html", context=context_dict)
 
 
@@ -50,8 +50,16 @@ def home(request):
 
 # planet page
 def planet(request, planet_name):
-    planetObject = Planet.objects.get(slug=planet_name.lower())
-    return render(request, "SkyView/planet.html", context=planetObject.statistics)
+    planetObject = Planet.objects.get(slug=planet_name)
+    posts = Post.objects.filter(planet=planetObject)
+
+    contextDict = {
+        "planet": planetObject,
+        "statistics": planetObject.statistics,
+        "posts": posts,
+    }
+
+    return render(request, "SkyView/planet.html", context=contextDict)
 
 
 # single post page

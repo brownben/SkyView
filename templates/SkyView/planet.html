@@ -1,62 +1,72 @@
 {% extends 'SkyView/base.html' %} 
 {% load staticfiles %} 
+{% load website_template_tags %}
+
 {% block title_block %}
     {{ planet.name }} 
 {% endblock %} 
 
 {% block body_block %}
-<div id="planetImg" src="{{ planet.image }}"></div>
+<h1>{{ planet.name }}</h1>
+<img id="planetImg" src="{{ planet.image.url }}"/>
 <div class="content">
   <div class="opacityBg"></div>
   <table>
     <tr>
       <th>Mass</th>
-      <td>{{mass}}</td>
+      <td>{{ statistics.mass }}</td>
     </tr>
     <tr>
       <th>Diameter</th>
-      <td>{{diameter}}</td>
+      <td>{{ statistics.diameter }}</td>
     </tr>
     <tr>
       <th>Volume</th>
-      <td>{{volume}}</td>
+      <td>{{ statistics.volume }}</td>
     </tr>
     <tr>
       <th>Gravity</th>
-      <td>{{gravity}}</td>
+      <td>{{ statistics.gravity }}</td>
     </tr>
     <tr>
       <th>Temperature</th>
-      <td>{{averageTemperature}}</td>
+      <td>{{ statistics.averageTemperature }}</td>
     </tr>
     <tr>
       <th>Moons</th>
-      <td>{{numberOfMoons}}</td>
+      <td>{{ statistics.numberOfMoons }}</td>
     </tr>
     <tr>
       <th>Average Distance from Sun</th>
-      <td>{{averageDistanceFromSun}}</td>
+      <td>{{ statistics.averageDistanceFromSun }}</td>
     </tr>
     <tr>
       <th>Length of One Day</th>
-      <td>{{lengthOfDay}}</td>
+      <td>{{ statistics.lengthOfDay }}</td>
     </tr>
     <tr>
       <th>Length of One Year</th>
-      <td>{{lengthOfYear}}</td>
+      <td>{{ statistics.lengthOfYear }}</td>
     </tr>
     <tr>
       <th>Atmosphere</th>
-      <td>{{contentsOfAtmosphere}}</td>
+      <td>{{ statistics.contentsOfAtmosphere }}</td>
     </tr>
     <tr>
       <th>Water</th>
-      <td>{{water}}</td>
+      <td>{{ statistics.water}}</td>
     </tr>
     <tr>
       <th>Specialties</th>
-      <td>{{specialties}}</td>
+      <td>{{ statistics.specialties }}</td>
     </tr>
   </table>
+
+  <section>
+    <h2>Posts about {{ planet.name }}</h2>
+    {% for post in posts %}
+       {% feedItem post.slug %}
+    {% endfor %}
+  </section>
 </div>
 {% endblock %}
