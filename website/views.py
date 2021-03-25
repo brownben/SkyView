@@ -47,9 +47,12 @@ def post(request, post_slug):
     likes = Reaction.objects.filter(post=post, type="like")
     comments = Comment.objects.filter(post=post)
 
-    user = User.objects.get(id=request.user.id)
-    user_profile = UserProfile.objects.get(user=user)
-    user_reaction = Reaction.objects.filter(user=user_profile, post=post).first()
+    if request.user.id:
+        user = User.objects.get(id=request.user.id)
+        user_profile = UserProfile.objects.get(user=user)
+        user_reaction = Reaction.objects.filter(user=user_profile, post=post).first()
+    else:
+        user_reaction = None
 
     context_dict = {
         "planet": post.planet,
