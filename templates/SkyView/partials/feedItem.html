@@ -1,17 +1,24 @@
 {% load staticfiles %}
 
-<div class="feedBox">
-  <div class="item" style="position: relative">
+<div class="background-section feed-post">
+  {% if post.user.picture %}
     <img
-      class="pfp"
+      class="profile-image"
+      src="{{ post.user.picture.url }}"
+      alt="{{ post.user.username }}'s Profile Image"
+    />
+  {% else %}
+    <img
+      class="profile-image"
       src="{% static 'images/pfp.png' %}"
       alt="{{ post.user.username }}'s Profile Image"
     />
-    <a href="{% url 'website:view_post' post.slug %}">
-      <div class="post">
-        <h3 class="textBox">{{ post.heading }}</h3>
-        <p class="textBox">{{ post.body }}</p>
-      </div>
-    </a>
-  </div>
+  {% endif %}
+
+  <a href="{% url 'website:view_post' post.slug %}">
+    <div>
+      <h3>{{ post.heading }}</h3>
+      <p>{{ post.body }}</p>
+    </div>
+  </a>
 </div>

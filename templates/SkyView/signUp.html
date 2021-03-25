@@ -2,12 +2,10 @@
 {% load staticfiles %} 
 {% block body_block %}
 
-<div class="content">
-  <div class="opacityBg"></div>
-  {% if registered %}
-  <div class="titleBox"><strong>Welcome to the team!</strong></div>
-  {% else %}
-  <div class="titleBox"><strong>Join the community!</strong></div>
+{% if registered %}
+  <h1 class="heading-large">Welcome to the Team!</h1>
+{% else %}
+  <h1 class="heading-large">Join the Community!</h1>
   <form
     class="formplace"
     id="user_form"
@@ -17,14 +15,12 @@
   >
     {% csrf_token %}
 
-    <!-- Display each form -->
-    {{ user_form.as_p }} {{ profile_form.as_p }}
+    
+    {{ user_form.as_p }} 
+    {{ profile_form.as_p }}
 
-    <!-- Provide a button to click to submit the form. -->
-    <div style="margin-left: 40%; text-align: center; width: 20%">
-      <input class="subm" type="submit" name="submit" value="Sign Up" />
-    </div>
+    <button class="button button-large">Sign Up</button>
   </form>
-  {% endif %}
-</div>
+{% endif %}
+
 {% endblock %}

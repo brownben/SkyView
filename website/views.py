@@ -81,10 +81,14 @@ def like_post(request, post_slug):
     if request.method == "POST":
         if user_reaction:
             user_reaction.delete()
-            return JsonResponse({"message": "Post Unliked", "buttonText": "Like Post"})
+            return JsonResponse(
+                {"message": "Post Unliked", "buttonText": "Like this Post", "liked": False}
+            )
         else:
             Reaction.objects.create(post=post, user=user_profile, type="like")
-            return JsonResponse({"message": "Post Liked", "buttonText": "Unlike Post"})
+            return JsonResponse(
+                {"message": "Post Liked", "buttonText": "You Like this Post", "liked": True}
+            )
     else:
         return HttpResponse("Invalid Method", 401)
 

@@ -1,1 +1,6 @@
-<section>{{ comment.body }}</section>
+<section class="background-section comment">
+  <p>{{ comment.body }}</p>
+  <p class="small">
+    {{ comment.user }} - <time> {{ comment.time_created }}</time>
+  </p>
+</section>

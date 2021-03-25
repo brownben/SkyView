@@ -1,47 +1,38 @@
-{% extends 'SkyView/base.html' %} 
-{% load staticfiles %} 
+{% extends 'SkyView/base.html' %}
+{% load staticfiles %}
 {% load website_template_tags %}
 
 {% block title_block %}
-    {{ user.username }} 
-{% endblock %} 
+    My Profile
+{% endblock %}
 
 {% block body_block %}
-<div class="content">
-  <div class="opacityBg"></div>
-  <div class="textBox" style="margin-left: 25%; text-align: center; width: 50%">
-    Your Posts and Comments
+  <h1 class="heading-large">My Profile</h1>
+
+  <div class="center-contents">
+    <img 
+      alt="{{ user.username }}'s Profile Picture" 
+      {% if user.picture %}
+        src="{{ user.picture.url }}" 
+      {% else %}
+        src="{% static 'images/pfp.png' %}"
+      {% endif %}
+      class="profile-image"
+    />
+  
+    <h2>Username: {{ user.username }}</h2>
+    <h2>Email: {{ user.email }}</h2>
+    {% if user.website %}
+      <h2>Website: {{ user.website }}</h2>
+    {% endif %}
   </div>
 
-  {% if user.picture %} 
-    {{ user.picture }} 
+  <h2>Your Posts</h2>
+  {% if not userPosts %}
+      <h3>You haven't created any posts yet</h3>
   {% else %}
-    <div>
-        <img class="pfpic" src="{% static 'images/pfp.png' %}" />
-    </div>
+      {% for post in userPosts %}
+        {% feedItem post.slug %}
+      {% endfor %}
   {% endif %}
-
-  <div class="titleBox">{{ user.username }}</div>
-  <div class="titleBox">{{ user.email }}</div>
-  {% if user.website %}
-    <div class="titleBox">{{ user.website }}</div>
-  {% endif %}
-  <!--if user has posts,
-        for all of them display feed box-->
-  <div class="content" id="feed">
-    <div class="formplace">
-      <!-- for all discussions in-->
-      <div class="textBox" style="margin-left: 3%">My Posts</div>
-      <div class="feedBox">
-        {% if not userPosts %}
-            <h3>You haven't created any posts yet</h3>
-        {% else %} 
-            {% for post in userPosts %}
-              {% feedItem post.slug %}
-            {% endfor %}
-        {% endif %}
-      </div>
-    </div>
-  </div>
-</div>
 {% endblock %}

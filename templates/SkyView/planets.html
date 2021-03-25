@@ -5,15 +5,18 @@
 {% block title_block %} 
   The Planets 
 {% endblock %} 
-{% block body_block %} 
 
-{% for planet in planets %}
-  <div class="content">
+{%block body_block %}
+
+<h1 class="large-heading">The Planets</h1>
+
+<div class="planets">
+  {% for planet in planets %}
     <a href="{% url 'website:planet' planet.slug %}">
       <h2>{{ planet.name }}</h2>
-      <img src="{{ planet.image.url }}" />
+      <img src="{{ planet.image.url }}" alt="Picture of {{ planet.name }}" loading="lazy" />
     </a>
-  </div>
-{% endfor %} 
+  {% endfor %}
+</div>
 
 {% endblock %}

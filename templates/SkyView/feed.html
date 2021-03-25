@@ -7,13 +7,9 @@
 {% endblock %} 
 
 {% block body_block %}
-<div class="content" id="feed">
-  <div class="opacityBg"></div>
+  <h1 class="large-heading">The Feed</h1>
 
-  <!-- for all discussions in-->
-  <div class="textBox" style="margin-left: 3%">Feed</div>
   {% for post in posts %}
     {% feedItem post.slug %}
   {% endfor %}
-</div>
 {% endblock %}

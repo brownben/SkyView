@@ -1,49 +1,70 @@
 {% extends 'SkyView/base.html' %} 
 {% load staticfiles %} 
-{% load website_template_tags %}
+{% load website_template_tags %} 
 
-{% block title_block %}
-    {{ heading }}
+{% block title_block %} 
+    {{ heading }} 
 {% endblock %} 
 
 {% block body_block %}
-<div class="content" id="feed">
-    <div class="opacityBg"></div>
-    <div class="feedBox">
-        <div class="item" style="position:relative">
-            <img class="pfp" src="{% static 'images/pfp.png' %}" />
-            <div class="post">
-                <h3 class="textBox">{{heading}}</h3>
-                <p class="textBox">{{body}} </p>
-                {% if user.is_authenticated %}
-                    <button 
-                        onClick="likePost({ 
-                            likeAPILocation: '{% url 'website:like_post' slug %}', 
-                            userId: {{ user.id }}, 
-                            csrfToken: '{{ csrf_token }}'
-                        })" 
-                        id="like-button"
-                    >
-                        {% if userLikedPost %}
-                            Unlike Post
-                        {% else %}
-                            Like Post
-                        {% endif %}
-                    </button>   
-                {% endif %}
-                
-                {% if image %}
-                    <img src="{{ image.url }}" style="display:inline-block" />
-                {% endif %}
-            </div>
-            <!--if comments exist: for all comments in-->
-            {% for comment in comments %}
-                {% comment comment.id %}
-            {% endfor %} 
-
-            <a href="{% url 'website:create_comment' slug %}">Add Comment</a>
-        </div>
-    </div>
+<div>
+  <h1 class="large-heading">{{heading}}</h1>
+  <p>Posted By: {{ creator }} - <time> {{ timeCreated }}</time></p>
 </div>
+
+<p>{{body}}</p>
+
+{% if image %}
+    <img src="{{ image.url }}" style="display: inline-block" />
+{% endif %}
+
+{% if user.is_authenticated %}
+<button
+  onClick="likePost({
+        likeAPILocation: '{% url 'website:like_post' slug %}',
+        userId: {{ user.id }},
+        csrfToken: '{{ csrf_token }}'
+    })"
+  id="like-button"
+  class="button"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+    />
+  </svg>
+  <span id="like-button-text">
+    {% if userLikedPost %} 
+        You Like this Post 
+    {% else %} 
+        Like this Post 
+    {% endif %}
+  </span>
+</button>
+{% endif %} 
+
+<section>
+  <h2>Comments</h2>
+  {% if not comments %}
+    <h3>No Comments Yet..</h3>
+  {% else %} 
+    {% for comment in comments %} 
+        {% comment comment.id %} 
+    {% endfor %}
+  {% endif %}
+</section>
+
+{% if user.is_authenticated %}
+    <a class="button" href="{% url 'website:create_comment' slug %}">Add Comment</a>
+{% endif %}
+
 <script type="module" src="{% static 'scripts/likePost.js' %}"></script>
 {% endblock %}
