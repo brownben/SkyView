@@ -41,7 +41,6 @@ class Planet(models.Model):
         else:
             return self.data
 
-
 class Post(models.Model):
     planet = models.ForeignKey(Planet, on_delete=models.CASCADE)
     heading = models.CharField(max_length=200)

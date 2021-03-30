@@ -29,10 +29,11 @@ def planet(request, planet_name):
     posts = Post.objects.filter(planet=planetObject)
 
     contextDict = {
-        "planet": planetObject,
-        "statistics": planetObject.statistics,
+        "planet": planetObject,        
         "posts": posts,
     }
+    if planetObject.statistics != {}:
+        contextDict["statistics"] = planetObject.statistics,
 
     return render(request, "SkyView/planet.html", context=contextDict)
 

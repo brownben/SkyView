@@ -14,7 +14,13 @@ from django.core.files import File
 from website.models import Planet, Post, Comment, Reaction, UserProfile
 
 
-planets = [
+planets = [    
+    {
+        "name" : "General",
+        "description" : "General Feed",
+        "data" : {},
+        "image" : "./static/images/general.png",
+    },
     {
         "name": "Mercury",
         "description": "The Planet Closest to the Sun.",
@@ -306,6 +312,7 @@ def add_post(planet_name, heading, username, image, body):
         heading=heading, planet=planet, creator=creatorProfile
     )[0]
     post.body = body
+    post.url_heading = heading.replace(" ", "_")
 
     if image:
         image_file = File(open(image, "rb"))
