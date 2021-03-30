@@ -1,6 +1,6 @@
 .carousel-container {
   position: relative;
-  margin-top: 0.5rem;
+  margin: 1rem 0;
 }
 
 .carousel {
@@ -86,7 +86,7 @@
 .controls {
   position: absolute;
   right: 0;
-  bottom: 1em;
+  bottom: 0.5em;
   left: 0;
   text-align: center;
 }

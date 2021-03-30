@@ -1,34 +1,34 @@
-{% extends 'SkyView/base.html' %} {% load staticfiles %} {% block title_block %}
-Login {% endblock %} {% block body_block %}
+{% extends 'SkyView/base.html' %} 
+{% load staticfiles %} 
 
-<div class="content">
-  <div class="opacityBg"></div>
-  <div class="textBox" style="margin-left: 25%; text-align: center; width: 50%">
-    <strong>Login to SkyView</strong>
-  </div>
-  <form
-    class="formplace"
-    id="login_form"
-    method="post"
-    action="{% url 'website:login' %}"
-  >
-    {% csrf_token %}
+{% block title_block %}
+  Login 
+{% endblock %} 
 
-    <label>Username</label>
-    <input class="formfield" type="text" name="username" value="" size="50" />
+{% block body_block %}
 
-    <label>Password</label>
-    <input
-      class="formfield"
-      type="password"
-      name="password"
-      value=""
-      size="50"
-    />
+<h1 class="heading-large">Login to SkyView</h1>
+ 
+<form
+  class="formplace"
+  id="login_form"
+  method="post"
+  action="{% url 'website:login' %}"
+>
+  {% csrf_token %}
 
-    <div style="margin-left: 40%; text-align: center; width: 20%">
-      <input class="subm" type="submit" value="Login" />
-    </div>
-  </form>
-</div>
+  <label>Username</label>
+  <input type="text" name="username" value="" size="50" />
+
+  <label>Password</label>
+  <input
+    type="password"
+    name="password"
+    value=""
+    size="50"
+  />
+
+  <button class="button button-large">Login</button>
+</form>
+
 {% endblock %}

@@ -4,229 +4,237 @@
 /* Import Font */
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
 
-
-/*constant attribute */
-
+/* General Styles */
 body {
-    background-image: url("../images/stars.png");
-    background-color: black;
-    background-repeat:repeat;
-    background-size:50%;
-    font-family: Comfortaa, system-ui, sans-serif;
-}
-
-
-#navbar {
-    position: relative;
-    width: 70%;
-    padding: 5px;
-    display: flex;
-    justify-content: space-between;
-    max-width: 700px;
-    margin: auto;
-}
-
-
-.opacityBg {
-    border-radius: 30px;
-    background-color: #747474;
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    opacity: .5;
-    width: 100%;
-    height: 100%;
-}
-
-
-.button:hover {
-    background-color: #C8C8C8;
+  background-image: url('../images/stars.png');
+  background-color: black;
+  background-repeat: repeat;
+  background-size: 50%;
+  font-family: Comfortaa, system-ui, sans-serif;
+  color: white;
 }
 
 a {
-    text-decoration: none;
-}
-a:active{
-    color:black;
+  color: white;
 }
 
-.button:active {
-    text-decoration: none;
-    transform: translateY(1px);
+img {
+  max-width: 100%;
 }
 
+main {
+  width: 100%;
+  max-width: 1024px;
+  padding: 0 2rem 2rem;
+  margin: auto;
 
-.textBox {
-    z-index: 2;
-    display: inline-block;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 5px;
-    background-color: #E8E8E8;
-    border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  gap: 1rem;
 }
 
-.content {
-    position: relative;
-    margin: auto;
-    padding: 10px;
-    max-width: 900px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    height: auto;
+section {
+  width: 100%;
 }
-
-.button:hover {
-    background-color: #C8C8C8;
-}
-
-a {
-    text-decoration: none;
-}
-
-.button:active {
-    text-decoration: none;
-    transform: translateY(1px);
-}
-
-/*feed attributes*/
-
-.feedBox {
-    margin-top: 6px;
-    height: auto;
-    margin-left: 3%;
-}
-
-
-/* home page attributes*/
-
-img#nasaPicture {
-    width: 100%;
-    max-width: 800px;
-    height: auto;
-    margin: auto;
-}
-
-#nasaPictureContainer{
-    width:70%;
-    margin:auto;
-
-}
-
-/*planet page attributes*/
 
 table {
-    margin: auto;
-    padding: 10px;
-    border: 1px solid black;
+  text-align: left;
+
+  border: 1px solid white;
+  width: 100%;
+  border-collapse: collapse;
 }
 
-th {
-    color: white;
-    text-align:left;
-}
-
-
+th,
 td {
-    color: white;
-    text-align: right;
+  border: 1px solid white;
+  padding: 0.25rem;
+}
+.background-section {
+  border-radius: 2rem;
+  background-color: rgb(116 116 116 / 0.5);
 }
 
-.pfp{
-    vertical-align:top;
-    width:70px;
-    height:70px;
-    border-radius:20px;
-    display:inline-flex;
+.large-heading {
+  font-size: 2.5rem;
+  margin: 1rem 0;
 }
 
-.post {
-    position:relative;
-    width:80%;
-    margin:auto;
-    display:inline-block;
+.center-contents {
+  text-align: center;
+  width: 100%;
 }
 
-.post h3{
-    position:relative;
-    width:100%;
-    margin: 0;
-    margin-top:5px;
-    padding:5px;
-}
-.post p {
-    background-color:#5D5D5D;
-    position:relative;
-    display:inline-block;
-    width: auto;
-    margin: 0;
-    padding: 5px;
+/* Navigation */
+nav {
+  width: 100%;
+  max-width: 1024px;
+  margin: 1rem auto;
+  padding: 0 2rem;
 }
 
+nav div {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 
-/* user */
-.titleBox {
-    z-index: 2;
-    display: inline-block;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-right: 10px;
-    padding: 5px;
-    background-color: #E8E8E8;
-    border-radius: 10px;
-    margin-left:25%; text-align:center; width:50%;
+  border-radius: 2rem;
+  background-color: rgb(116 116 116 / 0.5);
 }
 
-.subm {
-    z-index: 2;
-    display: inline-block;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 5px;
-    background-color: #E8E8E8;
-    border-radius: 10px;
-    border-color: #E8E8E8;
-    color: black;
-    text-align: center;
-    text-decoration: none;
+nav a,
+.button {
+  background: rgb(116 116 116 / 0.75);
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.25rem;
+  border: 0;
 }
 
-.formfield {
-    border-radius:8px;
-    border:1px solid;
-    padding:8px;
-    display:block;
-    width:100%;
-    border-color: #E8E8E8;
+.button-large {
+  font-size: 1.21rem;
+  margin-top: 1rem;
+  padding: 0.5rem 1.2rem;
 }
 
-.formplace {
-    border-radius:8px;
-    border:1px solid;
-    padding:8px;
-    display:block;
-    width:100%;
-    border-color: #E8E8E8;
-    background-color: #5d5d5d;
+nav a:hover,
+nav a:focus,
+.button:hover,
+.button:focus {
+  background: rgb(116 116 116 / 1);
 }
 
-.pfpic{
-    vertical-align:top;
-    margin-top: 20px;
-    width:220px;
-    height:220px;
-    border-radius:20px;
-    display:inline-flex;
-    margin-left:37.5%;
-    margin-bottom: 20px;
+/* Feed */
+.feed-post {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 0;
 }
 
+.feed-post a {
+  text-decoration: none;
+  margin-left: 1rem;
+}
 
+.feed-post h3 {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.feed-post p {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 40vw;
+}
+
+.feed-post .profile-image {
+  height: 4rem;
+  border-radius: 1000px;
+  margin: 0 1rem;
+}
+
+/* Planets Page */
+.planets {
+  color: white;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.planets a {
+  color: white;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.planets img {
+  max-width: 80%;
+}
+
+.planet-image {
+  max-height: 25rem;
+}
+
+/* Comments */
+.comment {
+  padding: 1rem 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.comment p {
+  margin: 0;
+}
+
+.comment .small {
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* Inputs */
+form {
+  width: 100%;
+}
+
+label {
+  display: block;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  background: none;
+  border: 1px solid #fff0;
+  padding: 0.5rem;
+  color: white;
+  border-radius: 0.25rem;
+  background-color: rgb(116 116 116 / 0.5);
+  margin: 0.5rem 0 1rem;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border: 1px solid #fff;
+}
+
+/* Like Button */
+
+#like-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#like-button svg {
+  height: 2rem;
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+#like-button.like {
+  background-color: #ef4444;
+}
+
+.profile-image {
+  height: 25rem;
+  border-radius: 1000px;
+}

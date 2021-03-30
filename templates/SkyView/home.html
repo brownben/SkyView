@@ -6,19 +6,23 @@
     Start Your Journey 
 {% endblock %} 
 
+{% block full_width %}
+    {% planets_carousel %}
+{% endblock %}
+
+
 {% block body_block %}
-
-{% planets_carousel %}
-
-<div class="content" id="feed">        
-    <div class="opacityBg"></div>
-    <a href="\Feed\"><div class="textBox" style="margin-left:3%;">Feed</div></a>
-    {% for post in recentPosts %}
-       {% feedItem post.slug %}
-    {% endfor %}
+  
+<h2>Feed</h2>
+{% for post in recentPosts %}
+    {% feedItem post.slug %}
+{% endfor %}
+<div class="center-contents">
+    <a class="button button-large" href="{% url 'website:feed' %}">View All Posts</a>
 </div>
 
-<div id="nasaPictureContainer">
-</div>
+<h2>NASA Picture of the Day</h2>
+<div id="nasaPictureContainer"></div>
 <script type="module" src="{% static 'scripts/nasaPictureOfTheDay.js' %}"></script>
+
 {% endblock %}

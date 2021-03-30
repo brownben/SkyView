@@ -11,37 +11,28 @@
   </head>
 
   <body>
-    <nav id="navbar">
-      <div class="opacityBg"></div>
-      <li class="textBox button">
+    <nav>
+      <div>
         <a href="{% url 'website:home' %}">Home</a>
-      </li>
-      <li class="textBox button">
         <a href="{% url 'website:feed' %}">Feed</a>
-      </li>
-      <li class="textBox button">
         <a href="{% url 'website:planets' %}">Planets</a>
-      </li>
-      {% if user.is_authenticated %}
-      <li class="textBox button">
-        <a href="{% url 'website:create_post' %}">Create Post</a>
-      </li>
-      <li class="textBox button">
-        <a href="{% url 'website:user_profile' %}">Profile</a>
-      </li>
-      <li class="textBox button">
-        <a href="{% url 'website:logout' %}">Logout</a>
-      </li>
-      {% else %}
-      <li class="textBox button">
-        <a href="{% url 'website:signUp' %}">Sign Up</a>
-      </li>
-      <li class="textBox button">
-        <a href="{% url 'website:login' %}">Login</a>
-      </li>
-      {% endif %}
+        {% if user.is_authenticated %}
+          <a href="{% url 'website:create_post' %}">Create Post</a>
+          <a href="{% url 'website:user_profile' %}">Profile</a>
+          <a href="{% url 'website:logout' %}">Logout</a>
+        {% else %}
+          <a href="{% url 'website:signUp' %}">Sign Up</a>
+          <a href="{% url 'website:login' %}">Login</a>
+        {% endif %}
+      </div>
     </nav>
 
-    <main>{% block body_block %} {% endblock %}</main>
+    {% block full_width %} 
+    {% endblock %}
+
+    <main>
+      {% block body_block %} 
+      {% endblock %}
+    </main>
   </body>
 </html>

@@ -54,9 +54,12 @@ def post(request, post_slug):
     likes = Reaction.objects.filter(post=post, type="like")
     comments = Comment.objects.filter(post=post)
 
-    user = User.objects.get(id=request.user.id)
-    user_profile = UserProfile.objects.get(user=user)
-    user_reaction = Reaction.objects.filter(user=user_profile, post=post).first()
+    if request.user.id:
+        user = User.objects.get(id=request.user.id)
+        user_profile = UserProfile.objects.get(user=user)
+        user_reaction = Reaction.objects.filter(user=user_profile, post=post).first()
+    else:
+        user_reaction = None
 
     context_dict = {
         "planet": post.planet,
@@ -85,10 +88,14 @@ def like_post(request, post_slug):
     if request.method == "POST":
         if user_reaction:
             user_reaction.delete()
-            return JsonResponse({"message": "Post Unliked", "buttonText": "Like Post"})
+            return JsonResponse(
+                {"message": "Post Unliked", "buttonText": "Like this Post", "liked": False}
+            )
         else:
             Reaction.objects.create(post=post, user=user_profile, type="like")
-            return JsonResponse({"message": "Post Liked", "buttonText": "Unlike Post"})
+            return JsonResponse(
+                {"message": "Post Liked", "buttonText": "You Like this Post", "liked": True}
+            )
     else:
         return HttpResponse("Invalid Method", 401)
 

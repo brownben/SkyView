@@ -1,72 +1,73 @@
-{% extends 'SkyView/base.html' %} 
-{% load staticfiles %} 
+{% extends 'SkyView/base.html' %}
+{% load staticfiles %}
 {% load website_template_tags %}
 
 {% block title_block %}
-    {{ planet.name }} 
-{% endblock %} 
+    {{ planet.name }}
+{% endblock %}
 
 {% block body_block %}
-<h1>{{ planet.name }}</h1>
-<img id="planetImg" src="{{ planet.image.url }}"/>
-<div class="content">
-  <div class="opacityBg"></div>
+  <h1 class="large-heading">{{ planet.name }}</h1>
+  <div class="center-contents">
+    <img class="planet-image" src="{{ planet.image.url }}"/>
+  </div>
+
+  <h2>{{ planet.name }} Statistics</h2>
   <table>
     <tr>
-      <th>Mass</th>
+      <th scope="row">Mass</th>
       <td>{{ statistics.mass }}</td>
     </tr>
     <tr>
-      <th>Diameter</th>
+      <th scope="row">Diameter</th>
       <td>{{ statistics.diameter }}</td>
     </tr>
     <tr>
-      <th>Volume</th>
+      <th scope="row">Volume</th>
       <td>{{ statistics.volume }}</td>
     </tr>
     <tr>
-      <th>Gravity</th>
+      <th scope="row">Gravity</th>
       <td>{{ statistics.gravity }}</td>
     </tr>
     <tr>
-      <th>Temperature</th>
+      <th scope="row">Temperature</th>
       <td>{{ statistics.averageTemperature }}</td>
     </tr>
     <tr>
-      <th>Moons</th>
+      <th scope="row">Moons</th>
       <td>{{ statistics.numberOfMoons }}</td>
     </tr>
     <tr>
-      <th>Average Distance from Sun</th>
+      <th scope="row">Average Distance from Sun</th>
       <td>{{ statistics.averageDistanceFromSun }}</td>
     </tr>
     <tr>
-      <th>Length of One Day</th>
+      <th scope="row">Length of One Day</th>
       <td>{{ statistics.lengthOfDay }}</td>
     </tr>
     <tr>
-      <th>Length of One Year</th>
+      <th scope="row">Length of One Year</th>
       <td>{{ statistics.lengthOfYear }}</td>
     </tr>
     <tr>
-      <th>Atmosphere</th>
+      <th scope="row">Atmosphere</th>
       <td>{{ statistics.contentsOfAtmosphere }}</td>
     </tr>
     <tr>
-      <th>Water</th>
+      <th scope="row">Water</th>
       <td>{{ statistics.water}}</td>
     </tr>
     <tr>
-      <th>Specialties</th>
+      <th scope="row">Specialties</th>
       <td>{{ statistics.specialties }}</td>
     </tr>
   </table>
 
-  <section>
-    <h2>Posts about {{ planet.name }}</h2>
-    {% for post in posts %}
-       {% feedItem post.slug %}
-    {% endfor %}
-  </section>
+
+  <h2>Posts about {{ planet.name }}</h2>
+  {% for post in posts %}
+      {% feedItem post.slug %}
+  {% endfor %}
 </div>
 {% endblock %}

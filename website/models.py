@@ -5,6 +5,7 @@ import json
 
 slug = models.SlugField(unique=True)
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     slug = models.SlugField()
@@ -78,7 +79,7 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now=False, auto_now_add=True)
-    body = models.TextField()
+    body = models.TextField(verbose_name="Message")
 
     def __str__(self):
 <<<<<<< HEAD
