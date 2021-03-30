@@ -12,6 +12,7 @@
     <img class="planet-image" src="{{ planet.image.url }}"/>
   </div>
 
+  {% if statistics %}
   <h2>{{ planet.name }} Statistics</h2>
   <table>
     <tr>
@@ -63,6 +64,7 @@
       <td>{{ statistics.specialties }}</td>
     </tr>
   </table>
+  {% endif %}
 
 
   <h2>Posts about {{ planet.name }}</h2>

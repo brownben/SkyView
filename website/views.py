@@ -1,16 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-<<<<<<< HEAD
-from website.models import Planet, Post, User, Reaction, Comment
-from django.template.defaultfilters import slugify
-from django.shortcuts import get_object_or_404
-from urllib.parse import unquote
-=======
 from django.http import HttpResponse
 from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
->>>>>>> 43d545aabdedfc51de9ff79b056e5fd31da2bba4
 
 from website.forms import CommentForm, PostForm, UserForm, UserProfileForm
 from website.models import Planet, Post, User, Reaction, Comment, UserProfile
@@ -36,10 +29,11 @@ def planet(request, planet_name):
     posts = Post.objects.filter(planet=planetObject)
 
     contextDict = {
-        "planet": planetObject,
-        "statistics": planetObject.statistics,
+        "planet": planetObject,        
         "posts": posts,
     }
+    if planetObject.statistics != {}:
+        contextDict["statistics"] = planetObject.statistics,
 
     return render(request, "SkyView/planet.html", context=contextDict)
 
@@ -156,36 +150,8 @@ def create_comment(request, post_slug):
 
     return render(request, "SkyView/createComment.html", context=context_dict)
 
-<<<<<<< HEAD
-# single post page
-def post(request, post_name):
-    post = Post.objects.get(url_heading = unquote(post_name))
-    postDict = {}
-    postDict["planet"] = post.planet
-    postDict["heading"] = post.heading
-    postDict["creator"] = post.creator
-    postDict["image"] = post.image
-    postDict["body"] = post.body
-    postDict["slug"] = post.slug
-    postDict["time created"] = post.time_created
-    postDict["url heading"] = post.url_heading
-    likes = Reaction.objects.filter(post = post, type = "like")
-    postDict["likes"] = len(likes)
-    comments = Comment.objects.filter(post = post)
-    postDict["comments"] = comments
-    return render(request, 'SkyView/post.html', context=postDict)
-=======
->>>>>>> 43d545aabdedfc51de9ff79b056e5fd31da2bba4
 
 @login_required
-<<<<<<< HEAD
-def profile(request):
-    try:
-        userPosts = Post.objects.get(creator_id = request.user.id)
-    except Post.DoesNotExist:
-        userPosts = None
-    return render(request, 'SkyView/profile.html', userPosts)
-=======
 def user_profile(request):
     try:
         userPosts = Post.objects.filter(creator_id=request.user.id)
@@ -195,7 +161,6 @@ def user_profile(request):
     context_dict = {"userPosts": userPosts}
     return render(request, "SkyView/profile.html", context=context_dict)
 
->>>>>>> 43d545aabdedfc51de9ff79b056e5fd31da2bba4
 
 def sign_up(request):
     # A boolean value for telling the template

@@ -14,7 +14,13 @@ from django.core.files import File
 from website.models import Planet, Post, Comment, Reaction, UserProfile
 
 
-planets = [
+planets = [    
+    {
+        "name" : "General",
+        "description" : "General Feed",
+        "data" : {},
+        "image" : "./static/images/general.png",
+    },
     {
         "name": "Mercury",
         "description": "The Planet Closest to the Sun.",

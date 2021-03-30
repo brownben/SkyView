@@ -40,11 +40,6 @@ class Planet(models.Model):
             return json.loads(self.data)
         else:
             return self.data
-<<<<<<< HEAD
-                        
-=======
-
->>>>>>> 43d545aabdedfc51de9ff79b056e5fd31da2bba4
 
 class Post(models.Model):
     planet = models.ForeignKey(Planet, on_delete=models.CASCADE)
@@ -54,13 +49,12 @@ class Post(models.Model):
     body = models.TextField()
     slug = models.SlugField()
     time_created = models.DateTimeField(auto_now=False, auto_now_add=True)
-    url_heading = models.CharField(max_length=200)
 
     def __str__(self):
         return self.heading
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.url_heading)
+        self.slug = slugify(self.heading)
 
         super().save(*args, **kwargs)
 
@@ -82,8 +76,4 @@ class Comment(models.Model):
     body = models.TextField(verbose_name="Message")
 
     def __str__(self):
-<<<<<<< HEAD
         return str(self.id)
-=======
-        return str(self.id)
->>>>>>> 43d545aabdedfc51de9ff79b056e5fd31da2bba4
