@@ -25,12 +25,12 @@ def planets(request):
 
 
 def planet(request, planet_name):
-    planetObject = Planet.objects.get(slug=planet_name)
-    posts = Post.objects.filter(planet=planetObject)
+    planet = Planet.objects.get(slug=planet_name)
+    posts = Post.objects.filter(planet=planet)
 
     contextDict = {
-        "planet": planetObject,
-        "statistics": planetObject.statistics,
+        "planet": planet,
+        "statistics": planet.statistics,
         "posts": posts,
     }
 
@@ -54,6 +54,7 @@ def post(request, post_slug):
     else:
         user_reaction = None
 
+    print("image", post.image)
     context_dict = {
         "planet": post.planet,
         "heading": post.heading,
@@ -105,7 +106,7 @@ def like_post(request, post_slug):
 def create_post(request):
     form = PostForm()
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
 
         if form.is_valid():
             post = form.save(commit=False)
@@ -176,7 +177,7 @@ def sign_up(request):
 
     if request.method == "POST":
         user_form = UserForm(request.POST)
-        profile_form = UserProfileForm(request.POST)
+        profile_form = UserProfileForm(request.POST, request.FILES)
 
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
