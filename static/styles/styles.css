@@ -74,18 +74,23 @@ td {
 }
 
 /* Navigation */
-nav {
+header h1 {
+  text-align: center;
+  margin: 0;
+}
+
+header {
   width: 100%;
   max-width: 1024px;
   margin: 1rem auto;
   padding: 0 2rem;
 }
 
-nav div {
+header nav {
   width: 100%;
   padding: 0.5rem 1rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
 
@@ -93,7 +98,15 @@ nav div {
   background-color: rgb(116 116 116 / 0.5);
 }
 
-nav a,
+header nav div {
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+nav :not(h1) a,
 .button {
   background: rgb(116 116 116 / 0.75);
   color: white;
@@ -102,6 +115,11 @@ nav a,
   padding: 0.35rem 0.7rem;
   border-radius: 0.25rem;
   border: 0;
+}
+
+nav h1 a {
+  text-decoration: none;
+  margin-left: 1rem;
 }
 
 .button-large {
