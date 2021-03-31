@@ -14,56 +14,59 @@
 
   {% if statistics %}
   <h2>{{ planet.name }} Statistics</h2>
-  <table>
-    <tr>
-      <th scope="row">Mass</th>
-      <td>{{ statistics.mass }}</td>
-    </tr>
-    <tr>
-      <th scope="row">Diameter</th>
-      <td>{{ statistics.diameter }}</td>
-    </tr>
-    <tr>
-      <th scope="row">Volume</th>
-      <td>{{ statistics.volume }}</td>
-    </tr>
-    <tr>
-      <th scope="row">Gravity</th>
-      <td>{{ statistics.gravity }}</td>
-    </tr>
-    <tr>
-      <th scope="row">Temperature</th>
-      <td>{{ statistics.averageTemperature }}</td>
-    </tr>
-    <tr>
-      <th scope="row">Moons</th>
-      <td>{{ statistics.numberOfMoons }}</td>
-    </tr>
-    <tr>
-      <th scope="row">Average Distance from Sun</th>
-      <td>{{ statistics.averageDistanceFromSun }}</td>
-    </tr>
-    <tr>
-      <th scope="row">Length of One Day</th>
-      <td>{{ statistics.lengthOfDay }}</td>
-    </tr>
-    <tr>
-      <th scope="row">Length of One Year</th>
-      <td>{{ statistics.lengthOfYear }}</td>
-    </tr>
-    <tr>
-      <th scope="row">Atmosphere</th>
-      <td>{{ statistics.contentsOfAtmosphere }}</td>
-    </tr>
-    <tr>
-      <th scope="row">Water</th>
-      <td>{{ statistics.water}}</td>
-    </tr>
-    <tr>
-      <th scope="row">Specialties</th>
-      <td>{{ statistics.specialties }}</td>
-    </tr>
-  </table>
+
+  <div class="background-section table-container">
+    <table>
+      <tr>
+          <th scope="row">Mass</th>
+          <td>{{ statistics.mass }}</td>
+        </tr>
+      <tr>
+        <th scope="row">Diameter</th>
+        <td>{{ statistics.diameter }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Volume</th>
+        <td>{{ statistics.volume }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Gravity</th>
+        <td>{{ statistics.gravity }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Temperature</th>
+        <td>{{ statistics.averageTemperature }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Moons</th>
+        <td>{{ statistics.numberOfMoons }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Average Distance from Sun</th>
+        <td>{{ statistics.averageDistanceFromSun }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Length of One Day</th>
+        <td>{{ statistics.lengthOfDay }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Length of One Year</th>
+        <td>{{ statistics.lengthOfYear }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Atmosphere</th>
+        <td>{{ statistics.contentsOfAtmosphere }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Water</th>
+        <td>{{ statistics.water}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Specialties</th>
+        <td>{{ statistics.specialties }}</td>
+      </tr>
+    </table>
+  </div>
   {% endif %}
 
 

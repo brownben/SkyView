@@ -68,6 +68,11 @@ td {
   width: 100%;
 }
 
+.table-container {
+  width: 100%;
+  padding: 1.5rem;
+}
+
 /* Navigation */
 nav {
   width: 100%;
