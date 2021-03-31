@@ -26,7 +26,7 @@
         csrfToken: '{{ csrf_token }}'
     })"
   id="like-button"
-  class="button"
+  class="button {% if userLikedPost %}like{% endif %}"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
