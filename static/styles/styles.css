@@ -77,6 +77,7 @@ td {
 header h1 {
   text-align: center;
   margin: 0;
+  font-size: 1.75rem;
 }
 
 header {
@@ -86,7 +87,7 @@ header {
   padding: 0 2rem;
 }
 
-header nav {
+header > div {
   width: 100%;
   padding: 0.5rem 1rem;
   display: flex;
@@ -98,7 +99,7 @@ header nav {
   background-color: rgb(116 116 116 / 0.5);
 }
 
-header nav div {
+header div nav {
   padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
@@ -106,7 +107,7 @@ header nav div {
   gap: 0.5rem;
 }
 
-nav :not(h1) a,
+nav a,
 .button {
   background: rgb(116 116 116 / 0.75);
   color: white;
@@ -117,15 +118,20 @@ nav :not(h1) a,
   border: 0;
 }
 
-nav h1 a {
+header h1 a {
   text-decoration: none;
   margin-left: 1rem;
+}
+
+header button {
+  display: none;
 }
 
 .button-large {
   font-size: 1.21rem;
   margin-top: 1rem;
   padding: 0.5rem 1.2rem;
+  display: inline-block;
 }
 
 nav a:hover,
@@ -133,6 +139,64 @@ nav a:focus,
 .button:hover,
 .button:focus {
   background: rgb(116 116 116 / 1);
+}
+
+@media (max-width: 720px) {
+  header h1 {
+    padding: 0.5rem;
+  }
+
+  header h1 a {
+    margin-left: 0.5rem;
+  }
+
+  header nav,
+  header > div {
+    flex-direction: column;
+  }
+
+  header div nav {
+    display: none;
+  }
+
+  header div nav.show {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  header div nav a {
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem;
+  }
+
+  .title-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  header button {
+    display: inline-block;
+    border: 0;
+    background-color: transparent;
+    transition: 0.3s;
+    border-radius: 0.25rem;
+    margin-right: 0.5rem;
+  }
+
+  header button:hover,
+  header button:focus {
+    background: rgb(116 116 116 / 1);
+  }
+
+  header button svg {
+    display: inline-block;
+    height: 2rem;
+    color: white;
+  }
 }
 
 /* Feed */
