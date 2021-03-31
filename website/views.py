@@ -28,13 +28,13 @@ def planet(request, planet_name):
     planet = Planet.objects.get(slug=planet_name)
     posts = Post.objects.filter(planet=planet)
 
-    contextDict = {
+    context_dict = {
         "planet": planet,
         "statistics": planet.statistics,
         "posts": posts,
     }
 
-    return render(request, "SkyView/planet.html", context=contextDict)
+    return render(request, "SkyView/planet.html", context=context_dict)
 
 
 def feed(request):
@@ -54,7 +54,6 @@ def post(request, post_slug):
     else:
         user_reaction = None
 
-    print("image", post.image)
     context_dict = {
         "planet": post.planet,
         "heading": post.heading,
