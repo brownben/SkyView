@@ -11,7 +11,7 @@ from website.models import Planet, Post, User, Reaction, Comment, UserProfile
 
 def home(request):
     context_dict = {
-        "recentPosts": Post.objects.order_by("time_created")[:5],
+        "recentPosts": Post.objects.order_by("-time_created")[:5],
         "isLoggedIn": request.user.is_authenticated,
     }
 
