@@ -4,13 +4,14 @@ import inspect
 import tempfile
 import website.models
 from website import forms
+from website import views
 from populate_skyview import populate
 from django.db import models
 from django.test import TestCase
 from django.conf import settings
 from django.urls import reverse, resolve
 from django.contrib.auth.models import User
-from website.models import UserProfile, Post
+from website.models import UserProfile, Post, Planet
 from django.forms import fields as django_fields
 from django.template.defaultfilters import slugify
 from django.forms import ModelChoiceField
@@ -63,14 +64,11 @@ class ModelTest(TestCase):
     def test_userprofile_class(self):
             """
             Does the UserProfile class exist in website.models? If so, are all the required attributes present?
-            Assertion fails if we can't assign values to all the fields required (i.e. one or more missing).
             """
             self.assertTrue('UserProfile' in dir(website.models))
 
             user_profile = website.models.UserProfile()
 
-            # Now check that all the required attributes are present.
-            # We do this by building up a UserProfile instance, and saving it.
             expected_attributes = {
                 'website': 'www.google.com',
                 'picture': tempfile.NamedTemporaryFile(suffix=".jpg").name,
@@ -236,7 +234,6 @@ class RegistrationTests(TestCase):
     def test_base_for_register_link(self):
         """
         Tests whether the registration link has been added to the base.html template.
-        This should work for pre-exercises, and post-exercises.
         """
         template_base_path = os.path.join(settings.TEMPLATE_DIR, 'SkyView')
         base_path = os.path.join(template_base_path, 'base.html')
@@ -260,7 +257,7 @@ class LoginTests(TestCase):
 
     def test_login_functionality(self):
         """
-        Tests the login functionality. A user should be able to log in, and should be redirected to the Rango homepage.
+        Tests the login functionality. A user should be able to log in, and should be redirected to the homepage.
         """
         user_object = create_user_object()
 
@@ -302,7 +299,7 @@ class LoginTests(TestCase):
         
         template_str = get_template(template_path)
         self.assertTrue('action="{% url \'website:login\' %}"' in template_str, f"{FAILURE_HEADER}Url lookup for 'website:login' not found in login.html <form>.{FAILURE_FOOTER}")
-        self.assertTrue('<button class="button button-large">Login</button>' in template_str, f"{FAILURE_HEADER}Submit button not found in login.html template.{FAILURE_FOOTER}")
+        self.assertTrue('<button class="button button-large">Login</button>' in template_str, f"{FAILURE_HEADER}Login button not found in login.html template.{FAILURE_FOOTER}")
 
 class LogoutTests(TestCase):
 
@@ -363,7 +360,7 @@ class LinkTidyingTests(TestCase):
 
         # These should be present.
         self.assertTrue('href="/feed/create-post/"' in content, f"{FAILURE_HEADER}The links in base.html are not correct when logged in.{FAILURE_FOOTER}")
-        self.assertTrue('href="/login/my-profile/"' in content, f"{FAILURE_HEADER}The links in base.html are not correct when logged in.{FAILURE_FOOTER}")
+        self.assertTrue('href="/login/my-profile"' in content, f"{FAILURE_HEADER}The links in base.html are not correct when logged in.{FAILURE_FOOTER}")
         self.assertTrue('href="/logout/"' in content, f"{FAILURE_HEADER}The links in base.html are not correct when logged in.{FAILURE_FOOTER}")
 
         # These should not be present.
@@ -382,7 +379,7 @@ class LinkTidyingTests(TestCase):
         
         # These should not be present.
         self.assertTrue('href="/feed/create-post/"' not in content, f"{FAILURE_HEADER}The links in base.html are not correct when logged out.{FAILURE_FOOTER}")
-        self.assertTrue('href="/login/my-profile/"' not in content, f"{FAILURE_HEADER}The links in base.html are not correct when logged out.{FAILURE_FOOTER}")
+        self.assertTrue('href="/login/my-profile"' not in content, f"{FAILURE_HEADER}The links in base.html are not correct when logged out.{FAILURE_FOOTER}")
         self.assertTrue('href="/logout/"' not in content, f"{FAILURE_HEADER}The links in base.html are not correct when logged out.{FAILURE_FOOTER}")
 
 
@@ -391,7 +388,7 @@ class PostTests(TestCase):
     
     def test_create_post(self):
         """
-        Tests to see if a page can be added when logged in.
+        Tests to see if a post can be added when logged in.
         """
         populate()
         user_object = create_user_object()
@@ -401,7 +398,7 @@ class PostTests(TestCase):
         self.assertEqual(response.status_code, 200, f"{FAILURE_HEADER}No HTTP status code when attempting to add a page when logged in.{FAILURE_FOOTER}")
         
         content = response.content.decode()
-        self.assertTrue('Create Post' in content, f"{FAILURE_HEADER}Adding a page doesn't result in the expected page.{FAILURE_FOOTER}")
+        self.assertTrue('Create Post' in content, f"{FAILURE_HEADER}Adding a post doesn't result in the expected page.{FAILURE_FOOTER}")
     
 
     def test_create_post_link(self):
@@ -431,27 +428,24 @@ class PostTests(TestCase):
         
         self.assertEqual(url, '/feed/create-post/', f"{FAILURE_HEADER}Incorrent URL mapping for Create Post.{FAILURE_FOOTER}")
 
-    def test_create_post_template(self):
+    def test_create_post_title(self):
         """
-        Does the createPost.html template exist in the correct place, and does it make use of template inheritance?
+        Does the createPost.html template exist in the correct place, and does it have the correct title block?
         """
         template_base_path = os.path.join(settings.TEMPLATE_DIR, 'SkyView')
         template_path = os.path.join(template_base_path, 'createPost.html')
         self.assertTrue(os.path.exists(template_path), f"{FAILURE_HEADER}We couldn't find the 'createPost.html' template.{FAILURE_FOOTER}")
 
         template_str = get_template(template_path)
-        full_title_pattern = r'<title>(\s*|\n*)Create Post(\s*|\n*)-(\s*|\n*)SkyView(\s*|\n*)</title>'
+
         block_title_pattern = r'{% block title_block %}(\s*|\n*)Create Post(\s*|\n*){% (endblock|endblock title_block) %}'
 
-        request = self.client.get(reverse('website:create_post'))
-        content = request.content.decode('utf-8')
-
-        #self.assertTrue(re.search(full_title_pattern, content), f"{FAILURE_HEADER}The <title> of the response for 'website:create_post' is not correct.{FAILURE_FOOTER}")
         self.assertTrue(re.search(block_title_pattern, template_str), f"{FAILURE_HEADER}The title_block is not correct.{FAILURE_FOOTER}")
-    
+        
+        
     def test_create_post_template_content(self):
         """
-        Some simple checks for the login.html template. Is the required text present?
+        Some simple checks for the createPost.html template. Is the required text present?
         """
         template_base_path = os.path.join(settings.TEMPLATE_DIR, 'SkyView')
         template_path = os.path.join(template_base_path, 'createPost.html')
@@ -462,62 +456,10 @@ class PostTests(TestCase):
         self.assertTrue('<button class="button button-large">Create Post</button>' in template_str, f"{FAILURE_HEADER}Submit button not found in createPost.html template.{FAILURE_FOOTER}")
 
 
-    """
-    def test_post_class(self):
-            ""
-            Does the Post class exist in website.models? If so, are all the required attributes present?
-            ""
-            self.assertTrue('Post' in dir(website.models))
-
-            post = website.models.Post()
-            planet = website.models.Planet()
-            user = User.objects.get(id=request.user.id)
-            user_profile = UserProfile.objects.get(user=user)
-            post.creator = user_profile
-
-            # Now check that all the required attributes are present.
-            expected_attributes = {
-                "planet": planet,
-                "heading": post.heading,
-                "creator": post.creator,
-                "image": post.image,
-                "body": post.body,
-                "slug": post.slug,
-                "timeCreated": post.time_created,
-            }
-
-            expected_types = {
-                'planet': models.ForeignKey,
-                'heading': models.fields.CharField,
-                'creator': models.ForeignKey,
-                'image': models.fields.files.ImageField,
-                'body': models.fields.TextField,
-                'slug': models.fields.SlugField,
-                'time_created':models.fields.DateTimeField,
-
-            }
-
-            found_count = 0
-
-            for attr in post._meta.fields:
-                attr_name = attr.name
-
-                for expected_attr_name in expected_attributes.keys():
-                    if expected_attr_name == attr_name:
-                        found_count += 1
-
-                        self.assertEqual(type(attr), expected_types[attr_name], f"{FAILURE_HEADER}The type of attribute for '{attr_name}' was '{type(attr)}'; we expected '{expected_types[attr_name]}'. {FAILURE_FOOTER}")
-                        setattr(post, attr_name, expected_attributes[attr_name])
-                    else:
-                        self.assertTrue(False, f"{FAILURE_HEADER}{expected_attr_name}!={attr_name}{FAILURE_FOOTER}")
-            
-            self.assertEqual(found_count, len(expected_attributes.keys()), f"{FAILURE_HEADER}In the Post model, we found {found_count} attributes, but were expecting {len(expected_attributes.keys())}. {FAILURE_FOOTER}")
-            post.save()
-
     def test_post_form(self):
-            ""
+            """
             Tests whether Post is in the correct place, and whether the correct fields have been specified for it.
-            ""
+            """
             self.assertTrue('Post' in dir(forms), f"{FAILURE_HEADER}We couldn't find the Post class in forms.py module. {FAILURE_FOOTER}")
             
             post_form = forms.PostForm()
@@ -526,10 +468,10 @@ class PostTests(TestCase):
             fields = post_form.fields
             
             expected_fields = {
-                #'planet': models.ModelChoiceField,
-                'heading': forms.fields.CharField,
-                'image': models.fields.files.ImageField,
-                'body': models.fields.TextField,
+                'planet': ModelChoiceField,
+                'heading': django_fields.CharField,
+                'image': django_fields.ImageField,
+                'body':django_fields.CharField,
             }
             
             for expected_field_name in expected_fields:
@@ -537,7 +479,7 @@ class PostTests(TestCase):
 
                 self.assertTrue(expected_field_name in fields.keys(), f"{FAILURE_HEADER}The field {expected_field_name} was not found in the PostForm form. {FAILURE_FOOTER}")
                 self.assertEqual(expected_field, type(fields[expected_field_name]), f"{FAILURE_HEADER}The field {expected_field_name} in PostForm was not of the correct type. Expected {expected_field}; got {type(fields[expected_field_name])}.{FAILURE_FOOTER}")
-"""
+
 class PlanetsTests(TestCase):
 
     def test_planets_url_exists(self):
@@ -581,48 +523,128 @@ class PlanetsTests(TestCase):
         
         template_str = get_template(template_path)
         self.assertTrue('{% url \'website:planet\' planet.slug %}' in template_str, f"{FAILURE_HEADER}Url lookup for 'website:planets' not found in planets.html <form>.{FAILURE_FOOTER}")
-        self.assertTrue('{% for planet in planets %}' in template_str, f"{FAILURE_HEADER}Submit button not found in login.html template.{FAILURE_FOOTER}")
-        self.assertTrue('"{% url \'website:planet\' planet.slug %}"' in template_str, f"{FAILURE_HEADER}Submit button not found in login.html template.{FAILURE_FOOTER}")
-        self.assertTrue('"{{ planet.image.url }}"' in template_str, f"{FAILURE_HEADER}Submit button not found in login.html template.{FAILURE_FOOTER}")
+        self.assertTrue('{% for planet in planets %}' in template_str, f"{FAILURE_HEADER}Planets not found in login.html template.{FAILURE_FOOTER}")
+        self.assertTrue('"{% url \'website:planet\' planet.slug %}"' in template_str, f"{FAILURE_HEADER}Planet links not found in login.html template.{FAILURE_FOOTER}")
+        self.assertTrue('"{{ planet.image.url }}"' in template_str, f"{FAILURE_HEADER}Planet images not found in login.html template.{FAILURE_FOOTER}")
 
-"""
+
 class PlanetTests(TestCase):
 
-    def test_planet_url_exists(self):
-        ""
-        Checks to see if the planet exist in the correct place, with the correct name.
-        ""
+    def test_planet_earth_url_exists(self):
+        """
+        Checks to see if the planet exists in the correct place, with the correct name.
+        """
         url = ''
-
         try:
-            url = reverse('website:planet')
+            url = reverse('website:planet', kwargs={'planet_name':slugify('Earth')})
         except:
             pass
         
-        self.assertEqual(url, '/planets/<slug:planet_name>/', f"{FAILURE_HEADER}Incorrent URL mapping for Planet.{FAILURE_FOOTER}")
+        self.assertEqual(url, '/planets/earth/', f"{FAILURE_HEADER}Incorrent URL mapping for Planet Earth.{FAILURE_FOOTER}")
+    
+    def test_general_url_exists(self):
+        """
+        Checks to see if the general planet page exists in the correct place, with the correct name.
+        """
+        url = ''
+        try:
+            url = reverse('website:planet', kwargs={'planet_name':slugify('General')})
+        except:
+            pass
+        
+        self.assertEqual(url, '/planets/general/', f"{FAILURE_HEADER}Incorrent URL mapping for Planet.{FAILURE_FOOTER}")
 
-    def test_planets_template(self):
-        ""
-        Does the planet.html template exist in the correct place, and does it make use of template inheritance?
-        ""
-        template_base_path = os.path.join(settings.TEMPLATE_DIR, 'SkyView')
-        template_path = os.path.join(template_base_path, 'planet.html')
-        self.assertTrue(os.path.exists(template_path), f"{FAILURE_HEADER}We couldn't find the 'planets.html' template.{FAILURE_FOOTER}")
+    def test_planet_mercury_url_exists(self):
+        """
+        Checks to see if the planet exists in the correct place, with the correct name.
+        """
+        url = ''
+        try:
+            url = reverse('website:planet', kwargs={'planet_name':slugify('Mercury')})
+        except:
+            pass
+        
+        self.assertEqual(url, '/planets/mercury/', f"{FAILURE_HEADER}Incorrent URL mapping for Planet Mercury.{FAILURE_FOOTER}")
 
-        template_str = get_template(template_path)
-        full_title_pattern = r'<title>(\s*|\n*){{ planet.name }}(\s*|\n*)-(\s*|\n*)SkyView(\s*|\n*)</title>'
-        block_title_pattern = r'{% block title_block %}(\s*|\n*){{ planet.name }}(\s*|\n*){% (endblock|endblock title_block) %}'
+    
+    def test_planet_venus_url_exists(self):
+        """
+        Checks to see if the planet exists in the correct place, with the correct name.
+        """
+        url = ''
+        try:
+            url = reverse('website:planet', kwargs={'planet_name':slugify('Venus')})
+        except:
+            pass
+        
+        self.assertEqual(url, '/planets/venus/', f"{FAILURE_HEADER}Incorrent URL mapping for Planet Venus.{FAILURE_FOOTER}")
 
-        request = self.client.get(reverse('website:planet'))
-        content = request.content.decode('utf-8')
+    
+    def test_planet_mars_url_exists(self):
+        """
+        Checks to see if the planet exists in the correct place, with the correct name.
+        """
+        url = ''
+        try:
+            url = reverse('website:planet', kwargs={'planet_name':slugify('Mars')})
+        except:
+            pass
+        
+        self.assertEqual(url, '/planets/mars/', f"{FAILURE_HEADER}Incorrent URL mapping for Planet Mars.{FAILURE_FOOTER}")
 
-        self.assertTrue(re.search(full_title_pattern, content), f"{FAILURE_HEADER}The <title> of the response for 'website:planet' is not correct.{FAILURE_FOOTER}")
-        self.assertTrue(re.search(block_title_pattern, template_str), f"{FAILURE_HEADER}The title_block is not correct.{FAILURE_FOOTER}")
+    
+    def test_planet_jupiter_url_exists(self):
+        """
+        Checks to see if the planet exists in the correct place, with the correct name.
+        """
+        url = ''
+        try:
+            url = reverse('website:planet', kwargs={'planet_name':slugify('Jupiter')})
+        except:
+            pass
+        
+        self.assertEqual(url, '/planets/jupiter/', f"{FAILURE_HEADER}Incorrent URL mapping for Planet Jupiter.{FAILURE_FOOTER}")
+
+    def test_planet_saturn_url_exists(self):
+        """
+        Checks to see if the planet exists in the correct place, with the correct name.
+        """
+        url = ''
+        try:
+            url = reverse('website:planet', kwargs={'planet_name':slugify('Saturn')})
+        except:
+            pass
+        
+        self.assertEqual(url, '/planets/saturn/', f"{FAILURE_HEADER}Incorrent URL mapping for Planet Saturn.{FAILURE_FOOTER}")
+
+    def test_planet_uranus_url_exists(self):
+        """
+        Checks to see if the planet exists in the correct place, with the correct name.
+        """
+        url = ''
+        try:
+            url = reverse('website:planet', kwargs={'planet_name':slugify('Uranus')})
+        except:
+            pass
+        
+        self.assertEqual(url, '/planets/uranus/', f"{FAILURE_HEADER}Incorrent URL mapping for Planet Uranus.{FAILURE_FOOTER}")
+
+    def test_planet_neptune_url_exists(self):
+        """
+        Checks to see if the planet exists in the correct place, with the correct name.
+        """
+        url = ''
+        try:
+            url = reverse('website:planet', kwargs={'planet_name':slugify('Neptune')})
+        except:
+            pass
+    
+        self.assertEqual(url, '/planets/neptune/', f"{FAILURE_HEADER}Incorrent URL mapping for Planet Neptune.{FAILURE_FOOTER}")
 
     def test_planets_template_content(self):
-        ""
+        """
         Some simple checks for the planet.html template. Is the required text present?
-        ""
+        """
         template_base_path = os.path.join(settings.TEMPLATE_DIR, 'SkyView')
         template_path = os.path.join(template_base_path, 'planet.html')
         self.assertTrue(os.path.exists(template_path), f"{FAILURE_HEADER}We couldn't find the 'planet.html' template.{FAILURE_FOOTER}")
@@ -644,7 +666,7 @@ class PlanetTests(TestCase):
         self.assertTrue('{{ statistics.specialties }}' in template_str, f"{FAILURE_HEADER}{{ statistics.specialties }} not found in planet.html template.{FAILURE_FOOTER}")
         self.assertTrue('Posts about {{ planet.name }}' in template_str, f"{FAILURE_HEADER}Posts not found in planet.html template.{FAILURE_FOOTER}")
 
-"""
+
 class HomepageTests(TestCase):
     def test_home_url_exists(self):
         """
@@ -669,7 +691,7 @@ class HomepageTests(TestCase):
 
         template_str = get_template(template_path)
         full_title_pattern = r'<title>(\s*|\n*)Start Your Journey(\s*|\n*)-(\s*|\n*)SkyView(\s*|\n*)</title>'
-        block_title_pattern = r'{% block title_block %}(\s*|\n*)Start Your Journey (\s*|\n*){% (endblock|endblock title_block) %}'
+        block_title_pattern = r'{% block title_block %}(\s*|\n*)Start Your Journey(\s*|\n*){% (endblock|endblock title_block) %}'
 
         request = self.client.get(reverse('website:home'))
         content = request.content.decode('utf-8')
@@ -690,4 +712,3 @@ class HomepageTests(TestCase):
         self.assertTrue('Feed' in template_str, f"{FAILURE_HEADER}Feed heading not found in login.html template.{FAILURE_FOOTER}")
         self.assertTrue('NASA Picture of the Day' in template_str, f"{FAILURE_HEADER}NASA heading not found in login.html template.{FAILURE_FOOTER}")
         self.assertTrue('"{% static \'scripts/nasaPictureOfTheDay.js\' %}"' in template_str, f"{FAILURE_HEADER}NASA picture not found in login.html template.{FAILURE_FOOTER}")
-
