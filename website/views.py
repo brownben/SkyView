@@ -81,20 +81,24 @@ def like_post(request, post_slug):
     if request.method == "POST":
         if user_reaction:
             user_reaction.delete()
+            likes = Reaction.objects.filter(post=post, type="like")
             return JsonResponse(
                 {
                     "message": "Post Unliked",
                     "buttonText": "Like this Post",
                     "liked": False,
+                    "numberOfLikes": len(likes),
                 }
             )
         else:
             Reaction.objects.create(post=post, user=user_profile, type="like")
+            likes = Reaction.objects.filter(post=post, type="like")
             return JsonResponse(
                 {
                     "message": "Post Liked",
                     "buttonText": "You Like this Post",
                     "liked": True,
+                    "numberOfLikes": len(likes),
                 }
             )
     else:

@@ -10,9 +10,10 @@ const likePost = async ({ likeAPILocation, userId, csrfToken }) => {
     },
   })
 
-  const { buttonText, liked } = await response.json()
+  const { buttonText, liked, numberOfLikes } = await response.json()
   document.getElementById('like-button-text').innerText = buttonText
   document.getElementById('like-button').classList.toggle('like', liked)
+  document.getElementById('number-of-likes').innerText = numberOfLikes
 }
 
 // make accessible to template outside of JS module
