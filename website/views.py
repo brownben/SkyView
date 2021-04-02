@@ -172,7 +172,7 @@ def user_profile(request):
     except Post.DoesNotExist:
         userPosts = None
 
-    context_dict = {"userPosts": userPosts, "userProfile":user_profile}
+    context_dict = {"userPosts": userPosts, "userProfile": user_profile}
     return render(request, "SkyView/profile.html", context=context_dict)
 
 

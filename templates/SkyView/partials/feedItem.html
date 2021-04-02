@@ -1,17 +1,16 @@
 {% load staticfiles %}
 
 <div class="background-section feed-post">
-  {% if post.user.picture %}
     <img
       class="profile-image"
-      src="{{ post.user.picture.url }}"
-      alt="{{ post.user.username }}'s Profile Image"
+      src="{{ post.creator.picture.url }}"
+      alt="{{ post.creator.username }}'s Profile Image"
     />
   {% else %}
     <img
       class="profile-image"
       src="{% static 'images/pfp.png' %}"
-      alt="{{ post.user.username }}'s Profile Image"
+      alt="{{ post.creator.username }}'s Profile Image"
     />
   {% endif %}
 
