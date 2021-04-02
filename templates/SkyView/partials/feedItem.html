@@ -1,6 +1,7 @@
 {% load staticfiles %}
 
 <div class="background-section feed-post">
+  {% if post.creator.picture %}
     <img
       class="profile-image"
       src="{{ post.creator.picture.url }}"
