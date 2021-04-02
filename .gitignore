@@ -134,6 +134,7 @@ dmypy.json
 # editor files
 **/.vs/**
 .vscode/**
+.vs/**
 
 # user uploaded images
 media/**
