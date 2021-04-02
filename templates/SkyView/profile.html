@@ -10,16 +10,16 @@
   <h1 class="heading-large">My Profile</h1>
 
   <div class="center-contents">
-    <img 
-      alt="{{ user.username }}'s Profile Picture" 
-      {% if user.picture %}
-        src="{{ user.picture.url }}" 
+    <img
+      alt="{{ user.username }}'s Profile Picture"
+      {% if userProfile.picture %}
+        src="{{ userProfile.picture.url }}"
       {% else %}
         src="{% static 'images/pfp.png' %}"
       {% endif %}
       class="profile-image"
     />
-  
+
     <h2>Username: {{ user.username }}</h2>
     <h2>Email: {{ user.email }}</h2>
     {% if user.website %}

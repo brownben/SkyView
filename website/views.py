@@ -164,12 +164,15 @@ def create_comment(request, post_slug):
 
 @login_required
 def user_profile(request):
+    user = User.objects.get(id=request.user.id)
+    user_profile = UserProfile.objects.get(user=user)
+
     try:
         userPosts = Post.objects.filter(creator_id=request.user.id)
     except Post.DoesNotExist:
         userPosts = None
 
-    context_dict = {"userPosts": userPosts}
+    context_dict = {"userPosts": userPosts, "userProfile":user_profile}
     return render(request, "SkyView/profile.html", context=context_dict)
 
 
@@ -179,7 +182,7 @@ def sign_up(request):
     registered = False
 
     if request.method == "POST":
-        user_form = UserForm(request.POST)
+        user_form = UserForm(request.POST, request.FILES)
         profile_form = UserProfileForm(request.POST, request.FILES)
 
         if user_form.is_valid() and profile_form.is_valid():
