@@ -17,6 +17,12 @@
 >
   {% csrf_token %}
 
+  {% if message %}
+    <p class="background-section center-contents message-container">
+      {{ message }}
+    </p>
+  {% endif %}
+
   <label>Username</label>
   <input type="text" name="username" value="" size="50" />
 

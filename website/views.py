@@ -243,11 +243,17 @@ def user_login(request):
                 login(request, user)
                 return redirect(reverse("website:home"))
             else:
-                return HttpResponse("Your account is disabled.")
-
+                return render(
+                    request,
+                    "SkyView/login.html",
+                    context={"message": "Your account is disabled."},
+                )
         else:
-            return HttpResponse("Invalid login details supplied.")
-
+            return render(
+                request,
+                "SkyView/login.html",
+                context={"message": "Invalid login details supplied."},
+            )
     else:
         # No context variables to pass to the template system
         return render(request, "SkyView/login.html")
