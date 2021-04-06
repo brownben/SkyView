@@ -120,6 +120,8 @@ def create_post(request):
 
             post.save()
             return redirect("/feed")
+        else:
+            return render(request, "SkyView/createPost.html", {"form": form})
     else:
         return render(request, "SkyView/createPost.html", {"form": form})
 
@@ -204,8 +206,15 @@ def sign_up(request):
             # registration was successful.
             registered = True
         else:
-            # Print problems to the terminal.
-            print(user_form.errors, profile_form.errors)
+            render(
+                request,
+                "SkyView/signUp.html",
+                context={
+                    "user_form": user_form,
+                    "profile_form": profile_form,
+                    "registered": registered,
+                },
+            )
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()

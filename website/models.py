@@ -17,8 +17,8 @@ class UserProfile(models.Model):
 
 
 class Planet(models.Model):
-    name = models.CharField(max_length=20)
-    slug = models.SlugField()
+    name = models.CharField(max_length=20, unique=True)
+    slug = models.SlugField(unique=True)
     description = models.TextField()
     data = models.TextField()
     image = models.ImageField(upload_to="planets", blank=True)
@@ -44,11 +44,11 @@ class Planet(models.Model):
 
 class Post(models.Model):
     planet = models.ForeignKey(Planet, on_delete=models.CASCADE)
-    heading = models.CharField(max_length=200)
+    heading = models.CharField(max_length=200, unique=True)
     creator = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="posts", blank=True)
     body = models.TextField()
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     time_created = models.DateTimeField(auto_now=False, auto_now_add=True)
 
     def __str__(self):
